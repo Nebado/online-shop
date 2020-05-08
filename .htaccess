@@ -1,0 +1,13 @@
+# Add Charset
+AddDefaultCharset utf-8
+
+# Enable Module Rewrite
+RewriteEngine on
+RewriteBase /
+
+# Create condition for files and directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Make the rule in which all requests redirect in index.php
+RewriteRule ^(.*)$ index.php
