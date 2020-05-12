@@ -5,6 +5,35 @@ class Product
     const SHOW_BY_DEFAULT = 6;
     
     /**
+     * Returns an array with latest products
+     * @type array
+     */
+    public static function getLatestProductsList()
+    {
+        $db = Db::getConnection();
+        $products = array();
+        
+        $query = 'SELECT id, name, title, price, image, is_new FROM product '
+                . 'WHERE status="1" '
+                . 'ORDER BY id DESC '
+                . 'LIMIT '.self::SHOW_BY_DEFAULT;
+        
+        $result = $db->query($query);
+        
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $products[$i]['id'] = $row['id'];
+            $products[$i]['name'] = $row['name'];
+            $products[$i]['title'] = $row['title'];
+            $products[$i]['price'] = $row['price'];
+            $products[$i]['image'] = $row['image'];
+            $products[$i]['is_new'] = $row['is_new'];
+            $i++;
+        }
+        return $products;
+    }
+    
+    /**
      * Returns an array with products in current category
      * @type array
      */
@@ -98,6 +127,11 @@ class Product
         }
     }
     
+    /**
+     * Returns count of items in category
+     * @param type $categoryId
+     * @return type integer
+     */
     public static function getCountItemsInCategory($categoryId)
     {
         if ($categoryId) {
@@ -116,6 +150,11 @@ class Product
         }
     }
     
+    /**
+     * Returns count of items in subcategory
+     * @param type $subCategoryId
+     * @return type integer
+     */
     public static function getCountItemsInSubCategory($subCategoryId)
     {
         if ($subCategoryId) {

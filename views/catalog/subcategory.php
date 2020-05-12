@@ -69,7 +69,7 @@
                             <?php foreach ($subProducts as $product): ?>
                                 <div class="row">
                                     <div class="span2">
-                                        <img src="<?php echo $product['image'];?>" alt=""/>
+                                        <img class="product" src="<?php echo $product['image'];?>" alt=""/>
                                     </div>
                                     <div class="span4">
                                         <h3>
@@ -113,7 +113,9 @@
                                 <?php foreach ($subProducts as $product): ?>
                                     <li class="span3">
                                         <div class="thumbnail">
-                                            <a href="product_details.html"><img src="<?php echo $product['image'];?>" alt=""/></a>
+                                            <a href="product_details.html">
+                                                <img class="product" src="<?php echo $product['image'];?>" alt=""/>
+                                            </a>
                                             <div class="caption">
                                                 <h5><?php echo $product['name'];?></h5>
                                                 <p> 
