@@ -14,6 +14,7 @@
                             </a>
                             <?php if ($category['id'] == 1): ?>
                                 <ul>
+                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">Home</a></li>
                                     <?php if (isset($subCategories) && is_array($subCategories)): ?>
                                         <?php foreach ($subCategories as $subCategory): ?>
                                             <li>
@@ -64,11 +65,11 @@
                 <div class="tab-content">
                     <!-- Content list -->
                     <div class="tab-pane" id="listView">
-                        <?php if (isset($catProducts) && is_array($catProducts)): ?>
+                        <?php if (isset($catProducts) && is_array($catProducts) && (!empty($catProducts))): ?>
                             <?php foreach ($catProducts as $product): ?>
                                 <div class="row">
                                     <div class="span2">
-                                        <img src="<?php echo $product['image'];?>" alt=""/>
+                                        <img src="<?php echo $product['image'];?>" width="100" height="200" alt=""/>
                                     </div>
                                     <div class="span4">
                                         <h3>
@@ -101,6 +102,8 @@
                                     </div>
                                 </div>
                             <?php endforeach; ?>
+                        <?php else: ?>
+                            <h3>No Products</h3>
                         <?php endif; ?>
                         <hr class="soft"/>
                     </div>
@@ -108,7 +111,7 @@
                     <!-- Content block -->
                     <div class="tab-pane  active" id="blockView">
                         <ul class="thumbnails">
-                            <?php if (isset($catProducts) && is_array($catProducts)): ?>
+                            <?php if (isset($catProducts) && is_array($catProducts) && (!empty($catProducts))): ?>
                                 <?php foreach ($catProducts as $product): ?>
                                     <li class="span3">
                                         <div class="thumbnail">
@@ -133,7 +136,9 @@
                                         </div>
                                     </li>
                                 <?php endforeach; ?>
-                            <?php endif; ?>
+                                <?php else: ?>
+                                    <h3 style="margin-left: 50px">No Products</h3>
+                                <?php endif; ?>
                         </ul>
                         <hr class="soft"/>
                     </div>
@@ -141,17 +146,9 @@
                 </div>
                 <!-- Content end -->
                 <a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
-                <div class="pagination">
-                    <ul>
-                        <li><a href="#">&lsaquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">...</a></li>
-                        <li><a href="#">&rsaquo;</a></li>
-                    </ul>
-                </div>
+                <!-- Pagination -->
+                <?php echo $pagination->get(); ?>
+                <!-- Pagination end -->
                 <br class="clr"/>
             </div>
         </div>

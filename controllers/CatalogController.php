@@ -3,7 +3,7 @@
 class CatalogController
 {
     
-    public function actionCategory($categoryId)
+    public function actionCategory($categoryId, $page = 1)
     {
         // Add categories list
         $categories = Category::getCategoriesList();
@@ -12,15 +12,19 @@ class CatalogController
         /* --- I don't receive id subcategory within Category --- */
         $subCategories = Category::getSubCategoriesList(1);
         
+        // Get count items in current category
+        $total = Product::getCountItemsInCategory($categoryId);
+        
+        $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
         // Get products in categories
         // Type array
-        $catProducts = Product::getProductsListInCategory(6, $categoryId);
+        $catProducts = Product::getProductsListInCategory(6, $categoryId, $page);
         
         require_once(ROOT . '/views/catalog/category.php');
         return true;
     }
     
-    public function actionSubCategory($categoryId, $subCategoryId)
+    public function actionSubCategory($categoryId, $subCategoryId, $page = 1)
     {
         // Add categories list
         $categories = Category::getCategoriesList();
@@ -28,12 +32,18 @@ class CatalogController
         /* --- I don't receive id subcategory within Category --- */
         $subCategories = Category::getSubCategoriesList(1);
         
+        // Get count items in current category
+        $total = Product::getCountItemsInSubCategory($subCategoryId);
+        
+        $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
+        // Get products in categories
+        // Type array
+        
         // Get products in subcategories
         // Type array
-        $subProducts = Product::getProductsListInSubCategory($categoryId, $subCategoryId);
+        $subProducts = Product::getProductsListInSubCategory($categoryId, $subCategoryId, $page);
         
         require_once(ROOT . '/views/catalog/subcategory.php');
-        
         return true;
     }
 }

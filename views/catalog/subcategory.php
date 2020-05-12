@@ -14,6 +14,7 @@
                             </a>
                             <?php if ($category['id'] == 1): ?>
                                 <ul>
+                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">Home</a></li>
                                     <?php if (isset($subCategories) && is_array($subCategories)): ?>
                                         <?php foreach ($subCategories as $subCategory): ?>
                                             <li>
@@ -141,17 +142,9 @@
                 </div>
                 <!-- Content end -->
                 <a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
-                <div class="pagination">
-                    <ul>
-                        <li><a href="#">&lsaquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">...</a></li>
-                        <li><a href="#">&rsaquo;</a></li>
-                    </ul>
-                </div>
+                <!-- Pagination -->
+                <?php echo $pagination->get(); ?>
+                <!-- Pagination end -->
                 <br class="clr"/>
             </div>
         </div>

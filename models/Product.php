@@ -2,15 +2,17 @@
 
 class Product
 {
-    const SHOW_BY_DEFAULT = 10;
+    const SHOW_BY_DEFAULT = 6;
     
     /**
      * Returns an array with products in current category
      * @type array
      */
-    public static function getProductsListInCategory($count = self::SHOW_BY_DEFAULT, $categoryId)
+    public static function getProductsListInCategory($count = self::SHOW_BY_DEFAULT, $categoryId, $page = 1)
     {
         $categoryId = intval($categoryId);
+        $page = intval($page);
+        $offset = ($page - 1) * $count;
         
         if ($categoryId) {
             $db = Db::getConnection();
@@ -21,7 +23,8 @@ class Product
                     . "availability, is_recommended, description, is_new, image FROM product "
                     . "WHERE status='1' AND category_id=:categoryId "
                     . "ORDER BY id DESC "
-                    . "LIMIT ".$count;
+                    . "LIMIT ".$count
+                    . " OFFSET ".$offset;
             $result = $db->prepare($sql);
             $result->bindParam(":categoryId", $categoryId, PDO::PARAM_INT);
             $result->execute();
@@ -51,8 +54,12 @@ class Product
      * Returns an array with products in current subcategory
      * @type array
      */
-    public static function getProductsListInSubCategory($categoryId, $subCategoryId)
-    {      
+    public static function getProductsListInSubCategory($categoryId, $subCategoryId, $page = 1)
+    {   
+        $subCategoryId = intval($subCategoryId);
+        $page = intval($page);
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+        
         if ($subCategoryId) {
             
             $db = Db::getConnection();
@@ -62,7 +69,8 @@ class Product
                     . "availability, is_recommended, description, is_new, image FROM product "
                     . "WHERE status='1' AND category_id=:categoryId AND sub_category_id=:subCategoryId "
                     . "ORDER BY id DESC "
-                    . "LIMIT ".self::SHOW_BY_DEFAULT;
+                    . "LIMIT ".self::SHOW_BY_DEFAULT
+                    . " OFFSET ".$offset;
             
             $result = $db->prepare($sql);
             $result->bindParam(":categoryId", $categoryId, PDO::PARAM_INT);
@@ -87,6 +95,42 @@ class Product
             }
             
             return $products;
+        }
+    }
+    
+    public static function getCountItemsInCategory($categoryId)
+    {
+        if ($categoryId) {
+            $db = Db::getConnection();
+            
+            $sql = "SELECT COUNT(id) count FROM product "
+                    . "WHERE status='1' AND category_id = :categoryId ";
+            
+            $result = $db->prepare($sql);
+            $result->bindParam(":categoryId", $categoryId, PDO::PARAM_INT);
+            $result->execute();
+            
+            if ($row = $result->fetch()) {
+                return $row['count'];
+            }
+        }
+    }
+    
+    public static function getCountItemsInSubCategory($subCategoryId)
+    {
+        if ($subCategoryId) {
+            $db = Db::getConnection();
+            
+            $sql = "SELECT COUNT(id) count FROM product "
+                    . "WHERE status='1' AND sub_category_id = :subCategoryId ";
+            
+            $result = $db->prepare($sql);
+            $result->bindParam(":subCategoryId", $subCategoryId, PDO::PARAM_INT);
+            $result->execute();
+            
+            if ($row = $result->fetch()) {
+                return $row['count'];
+            }
         }
     }
 }
