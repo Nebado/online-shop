@@ -30,7 +30,7 @@ class CatalogController
         
         // Get products in subcategories
         // Type array
-        $subProducts = Product::getProductsListInSubCategory(6, $categoryId, $subCategoryId);
+        $subProducts = Product::getProductsListInSubCategory($categoryId, $subCategoryId);
         
         require_once(ROOT . '/views/catalog/subcategory.php');
         
