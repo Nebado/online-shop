@@ -9,6 +9,9 @@ return array(
     'catalog/category-([0-9]+)' => 'catalog/category/$1', // actionCategory in CatalogController
     // Product
     'product/([0-9]+)' => 'product/view/$1', // actionView in ProductController
+    // Cart
+    'cart/add/([0-9])' => 'cart/add/$1', // actionAdd in CartController
+    'cart' => 'cart/index', // actionIndex in CartController
     
     '' => 'site/index' // actionIndex in SiteController
 );
