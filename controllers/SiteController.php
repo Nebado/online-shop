@@ -14,6 +14,11 @@ class SiteController
         
         // Return array with latest products
         $latestProducts = Product::getLatestProductsList();
+        
+        // Return array with featured products
+        $featuredProducts = Product::getFeaturedProductsList();
+        // Count items in Featured Products
+        $count = Product::getCountItemsInFeaturedProducts();
 
         // Connect view
         require_once(ROOT . '/views/site/index.php');
