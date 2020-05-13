@@ -112,7 +112,7 @@
                                     <?php if ($product['is_new']):?>
                                        <i class="tag"></i>
                                     <?php endif;?>
-                                    <a  href="product_details.html">
+                                    <a  href="/product/<?php echo $product['id'];?>">
                                         <img class="product" src="<?php echo $product['image'];?>" alt=""/>
                                     </a>
                                     <div class="caption">
@@ -121,7 +121,7 @@
                                             <?php echo $product['title'];?>
                                         </p>
                                         <h4 style="text-align:center">
-                                            <a class="btn" href="product_details.html">
+                                            <a class="btn" href="/product/<?php echo $product['id'];?>">
                                                 <i class="icon-zoom-in"></i>
                                             </a>
                                             <a class="btn" href="#">Add to
@@ -153,13 +153,13 @@
                                                         <?php if ($fproduct['is_new']): ?>
                                                             <i class="tag"></i>
                                                         <?php endif; ?>
-                                                        <a href="product_details.html">
+                                                        <a href="/product/<?php echo $fproduct['id'];?>">
                                                             <img class="product" src="<?php echo $fproduct['image'];?>" alt="">
                                                         </a>
                                                         <div class="caption">
                                                             <h5><?php echo $fproduct['name'];?></h5>
                                                             <h4>
-                                                                <a class="btn" href="product_details.html">
+                                                                <a class="btn" href="/product/<?php echo $fproduct['id'];?>">
                                                                     VIEW
                                                                 </a> 
                                                                 <span class="pull-right">
@@ -182,13 +182,13 @@
                                                         <?php if ($fproduct['is_new']): ?>
                                                             <i class="tag"></i>
                                                         <?php endif; ?>
-                                                        <a href="product_details.html">
+                                                        <a href="/product/<?php echo $fproduct['id'];?>">
                                                             <img class="product" src="<?php echo $fproduct['image'];?>" alt="">
                                                         </a>
                                                         <div class="caption">
                                                             <h5><?php echo $fproduct['name'];?></h5>
                                                             <h4>
-                                                                <a class="btn" href="product_details.html">
+                                                                <a class="btn" href="/product/<?php echo $fproduct['id'];?>">
                                                                     VIEW
                                                                 </a> 
                                                                 <span class="pull-right">

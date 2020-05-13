@@ -85,7 +85,7 @@
                                         <p>
                                             <?php echo $product['title']; ?>
                                         </p>
-                                        <a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+                                        <a class="btn btn-small pull-right" href="/product/<?php echo $product['id'];?>">View Details</a>
                                         <br class="clr"/>
                                     </div>
                                     <div class="span3 alignR">
@@ -95,8 +95,8 @@
                                                 <input type="checkbox">  Adds product to compair
                                             </label><br/>
 
-                                            <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
-                                            <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+                                            <a href="/product/<?php echo $product['id'];?>" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+                                            <a href="/product/<?php echo $product['id'];?>" class="btn btn-large"><i class="icon-zoom-in"></i></a>
 
                                         </form>
                                     </div>
@@ -113,7 +113,7 @@
                                 <?php foreach ($subProducts as $product): ?>
                                     <li class="span3">
                                         <div class="thumbnail">
-                                            <a href="product_details.html">
+                                            <a href="/product/<?php echo $product['id'];?>">
                                                 <img class="product" src="<?php echo $product['image'];?>" alt=""/>
                                             </a>
                                             <div class="caption">
@@ -122,7 +122,7 @@
                                                     <?php echo $product['title']; ?>
                                                 </p>
                                                 <h4 style="text-align:center">
-                                                    <a class="btn" href="product_details.html"> 
+                                                    <a class="btn" href="/product/<?php echo $product['id'];?>"> 
                                                         <i class="icon-zoom-in"></i>
                                                     </a> 
                                                     <a class="btn" href="#">Add to 

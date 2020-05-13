@@ -156,6 +156,22 @@ class Product
         }
     }
     
+    public static function getProductById($productId)
+    {
+        if ($productId) {
+            $db = Db::getConnection();
+            
+            $sql = "SELECT id, name, code, price, title, category_id, sub_category_id,"
+                    . "availability, is_featured, description, is_new, image FROM product "
+                    . "WHERE status = '1' AND id = :productId ";
+            $result = $db->prepare($sql);
+            $result->bindParam(":productId", $productId, PDO::PARAM_INT);
+            $result->execute();
+            
+            return $result->fetch();
+        }
+    }
+    
     /**
      * Returns count of items in category
      * @param type $categoryId
