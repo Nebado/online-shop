@@ -6,7 +6,7 @@
         <div class="carousel-inner">
             <div class="item active">
                 <div class="container">
-                    <a href="register.html"><img src="/template/themes/images/carousel/3.png" alt=""/></a>
+                    <a href="/register/"><img src="/template/themes/images/carousel/3.png" alt=""/></a>
                     <div class="carousel-caption">
                         <h4>Second Thumbnail label</h4>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -16,7 +16,7 @@
             </div>
             <div class="item">
                 <div class="container">
-                    <a href="register.html"><img src="/template/themes/images/carousel/4.png" alt=""/></a>
+                    <a href="/register/"><img src="/template/themes/images/carousel/4.png" alt=""/></a>
                     <div class="carousel-caption">
                         <h4>Second Thumbnail label</h4>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -26,7 +26,7 @@
             </div>
             <div class="item">
                 <div class="container">
-                    <a href="register.html"><img src="/template/themes/images/carousel/5.png" alt=""/></a>
+                    <a href="/register/"><img src="/template/themes/images/carousel/5.png" alt=""/></a>
                     <div class="carousel-caption">
                         <h4>Second Thumbnail label</h4>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -35,7 +35,7 @@
             </div>
             <div class="item">
                 <div class="container">
-                    <a href="register.html"><img src="/template/themes/images/carousel/6.png" alt=""/></a>
+                    <a href="/register/"><img src="/template/themes/images/carousel/6.png" alt=""/></a>
                     <div class="carousel-caption">
                         <h4>Second Thumbnail label</h4>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -53,7 +53,15 @@
         <div class="row">
             <!-- Sidebar -->
             <div id="sidebar" class="span3">
-                <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="/template/themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span></a></div>
+                <div class="well well-small">
+                    <a id="myCart" href="/cart/">
+                        <img src="/template/themes/images/ico-cart.png" alt="cart">
+                            3 Items in your cart  
+                        <span class="badge badge-warning pull-right">
+                            $155.00
+                        </span>
+                    </a>
+                </div>
                 <ul id="sideManu" class="nav nav-tabs nav-stacked">
                     <?php foreach ($categories as $category): ?>
                         <li class="<?php if ($category['id'] == 1) echo 'subMenu open'; ?>">

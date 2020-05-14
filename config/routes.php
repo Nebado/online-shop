@@ -12,6 +12,9 @@ return array(
     // Cart
     'cart/add/([0-9])' => 'cart/add/$1', // actionAdd in CartController
     'cart' => 'cart/index', // actionIndex in CartController
+    // User
+    'register' => 'user/register', // actionRegister in UserController
+    'login' => 'user/login', // actionLogin in UserController
     
     '' => 'site/index' // actionIndex in SiteController
 );
