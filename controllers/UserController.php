@@ -64,16 +64,17 @@ class UserController
                 $errors[] = 'Phone must be at least 10 characters';
             }
             
-            if (!$errors) {
+            if ($errors == false) {
                 // Receive user id when he is registered
                 $userId = User::register($firstName, $lastName, $email,
                         $password, $birth, $company, $address, $city, 
                         $state, $postcode, $country, $info, $phone);
 
                 if ($userId) {
-                    $result = User::auth($userId);
+                    User::auth($userId);
                     header("Location: /");
                 }
+                $result = true;
             }            
         }
         
@@ -90,7 +91,45 @@ class UserController
         /* --- I don't receive id subcategory within Category --- */
         $subCategories = Category::getSubCategoriesList(1);
         
+        // Login
+        $email = '';
+        $password = '';
+        $result = false;
+        
+        if (isset($_POST['submit'])) {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            
+            $errors = [];
+            
+            // Validate errors
+            if (!User::checkEmail($email)) {
+                $errors[] = 'Email is wrong';
+            }
+            
+            if (!User::checkPassword($password)) {
+                $errors[] = 'Password must be at least 6 characters';
+            }
+            
+            if (!$errors) {
+                $userId = User::login($email, $password);
+                if ($userId) {
+                    User::auth($userId);
+                    header("Location: /");
+                }
+            }
+        }        
+        
         require_once(ROOT . '/views/login/login.php');
+        return true;
+    }
+    
+    public function actionLogout()
+    {
+        if ($_SESSION['user']) {
+            unset($_SESSION['user']);
+            header("Location: /");
+        }
         return true;
     }
 }

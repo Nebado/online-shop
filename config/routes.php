@@ -15,6 +15,7 @@ return array(
     // User
     'register' => 'user/register', // actionRegister in UserController
     'login' => 'user/login', // actionLogin in UserController
+    'logout' => 'user/logout', // actionLogout in UserController
     
     '' => 'site/index' // actionIndex in SiteController
 );

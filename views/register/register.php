@@ -14,7 +14,7 @@
                             </a>
                             <?php if ($category['id'] == 1): ?>
                                 <ul>
-                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">Home</a></li>
+                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">All</a></li>
                                     <?php if (isset($subCategories) && is_array($subCategories)): ?>
                                         <?php foreach ($subCategories as $subCategory): ?>
                                             <li>

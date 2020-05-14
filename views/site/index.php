@@ -70,7 +70,7 @@
                             </a>
                             <?php if ($category['id'] == 1): ?>
                                 <ul>
-                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">Home</a></li>
+                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">All</a></li>
                                     <?php if (isset($subCategories) && is_array($subCategories)): ?>
                                         <?php foreach ($subCategories as $subCategory): ?>
                                             <li>
@@ -132,7 +132,7 @@
                                             <a class="btn" href="/product/<?php echo $product['id'];?>">
                                                 <i class="icon-zoom-in"></i>
                                             </a>
-                                            <a class="btn" href="#">Add to
+                                            <a class="btn" href="/add/<?php echo $product['id'];?>">Add to
                                                 <i class="icon-shopping-cart"></i>
                                             </a>
                                             <a class="btn btn-primary" href="#">

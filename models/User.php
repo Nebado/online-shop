@@ -17,7 +17,7 @@ class User
      * @param type $country
      * @param type $info
      * @param type $phone
-     * @return boolean
+     * @return boolean, integer
      */
     public static function register($firstName, $lastName, $email, $password, $birth, $company, $address, $city, $state, $postcode, $country, $info, $phone)
     {
@@ -52,6 +52,22 @@ class User
         return true;
     }
     
+    public static function login($email, $password) {
+        $db = Db::getConnection();
+        
+        $sql = "SELECT id FROM user WHERE email = :email AND password = :password";
+        $result = $db->prepare($sql);
+        $result->bindParam(":email", $email, PDO::PARAM_STR);
+        $result->bindParam(":password", $password, PDO::PARAM_STR);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+        
+        if ($row = $result->fetch()) {
+            return $row['id'];
+        }
+        return true;
+    }
+    
     /**
      * Set user id in session
      * @param type $userId
@@ -60,6 +76,27 @@ class User
     public static function auth($userId)
     {
         $_SESSION['user'] = $userId;
+        return true;
+    }
+    /**
+     * Check user on auth
+     * @return type
+     */
+    public static function isAuth()
+    {
+        if ($_SESSION['user']) {
+            $userId = $_SESSION['user'];
+            return $userId;
+        } else {
+            header("Location: /login/");
+        }
+    }
+    
+    public static function isGuest()
+    {
+        if (isset($_SESSION['user'])) {
+            return false;
+        }
         return true;
     }
     
