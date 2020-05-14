@@ -1,3 +1,4 @@
+img.product {width: 200px; height: 220px;}
 #mainBody {/* background: url(../images/seperator.png) repeat-x 0 0; */ border-top:2px solid #dedede; padding-top: 18px;}
 #carouselBlk,#header{background: url(../images/headerRepeat.png) repeat-x 0 0 #f7f7f7;}
 #srchFld {background: url(../images/search.png) no-repeat 4px center #fff;}

@@ -14,6 +14,7 @@
                             </a>
                             <?php if ($category['id'] == 1): ?>
                                 <ul>
+                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">All</a></li>
                                     <?php if (isset($subCategories) && is_array($subCategories)): ?>
                                         <?php foreach ($subCategories as $subCategory): ?>
                                             <li>
@@ -60,85 +61,100 @@
                     <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
                 </div>
                 <br class="clr"/>
+                <!-- Content -->
                 <div class="tab-content">
+                    <!-- Content list -->
                     <div class="tab-pane" id="listView">
-                        <?php if (isset($catProducts) && is_array($catProducts)): ?>
-                            <?php foreach ($catProducts as $products): ?>
+                        <?php if (isset($catProducts) && is_array($catProducts) && (!empty($catProducts))): ?>
+                            <?php foreach ($catProducts as $product): ?>
                                 <div class="row">
                                     <div class="span2">
-                                        <img src="/template/themes/images/products/3.jpg" alt=""/>
+                                        <img class="product" src="<?php echo $product['image'];?>" alt=""/>
                                     </div>
                                     <div class="span4">
-                                        <h3>New | Available</h3>				
+                                        <h3>
+                                            <?php if ($product['is_new']): ?>
+                                                New |
+                                            <?php endif; ?>
+                                            <?php if ($product['availability']): ?>
+                                                Available
+                                            <?php endif; ?>
+                                        </h3>			  
                                         <hr class="soft"/>
-                                        <h5>Product Name </h5>
+                                        <h4><?php echo $product['name'];?></h4>
                                         <p>
-                                            Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - 
-                                            that is why our goods are so popular..
+                                            <?php echo $product['title']; ?>
                                         </p>
-                                        <a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+                                        <a class="btn btn-small pull-right" href="/product/<?php echo $product['id'];?>">View Details</a>
                                         <br class="clr"/>
                                     </div>
                                     <div class="span3 alignR">
                                         <form class="form-horizontal qtyFrm">
-                                            <h3> $140.00</h3>
+                                            <h3> $<?php echo $product['price'];?></h3>
                                             <label class="checkbox">
                                                 <input type="checkbox">  Adds product to compair
                                             </label><br/>
 
-                                            <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
-                                            <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+                                            <a href="/product/<?php echo $product['id'];?>" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+                                            <a href="/product/<?php echo $product['id'];?>" class="btn btn-large"><i class="icon-zoom-in"></i></a>
 
                                         </form>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
+                        <?php else: ?>
+                            <h3>No Products</h3>
                         <?php endif; ?>
                         <hr class="soft"/>
-                        
-                        
-                        
                     </div>
-
+                    <!-- Content list end -->
+                    <!-- Content block -->
                     <div class="tab-pane  active" id="blockView">
                         <ul class="thumbnails">
-                            <?php if (isset($catProducts) && is_array($catProducts)): ?>
-                                <?php foreach ($catProducts as $products): ?>
+                            <?php if (isset($catProducts) && is_array($catProducts) && (!empty($catProducts))): ?>
+                                <?php foreach ($catProducts as $product): ?>
                                     <li class="span3">
                                         <div class="thumbnail">
-                                            <a href="product_details.html"><img src="/template/themes/images/products/3.jpg" alt=""/></a>
+                                            <a href="/product/<?php echo $product['id'];?>">
+                                                <img class="product" src="<?php echo $product['image'];?>" alt=""/>
+                                            </a>
                                             <div class="caption">
-                                                <h5>Manicure &amp; Pedicure</h5>
+                                                <h5><?php echo $product['name'];?></h5>
                                                 <p> 
-                                                    I'm a paragraph. Click here 
+                                                    <?php echo $product['title']; ?>
                                                 </p>
-                                                <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">&euro;222.00</a></h4>
+                                                <h4 style="text-align:center">
+                                                    <a class="btn" href="/product/<?php echo $product['id'];?>"> 
+                                                        <i class="icon-zoom-in"></i>
+                                                    </a> 
+                                                    <a class="btn" href="#">Add to 
+                                                        <i class="icon-shopping-cart"></i>
+                                                    </a> 
+                                                    <a class="btn btn-primary" href="#">
+                                                        $<?php echo $product['price'];?>
+                                                    </a>
+                                                </h4>
                                             </div>
                                         </div>
                                     </li>
                                 <?php endforeach; ?>
-                            <?php endif; ?>
+                                <?php else: ?>
+                                    <h3 style="margin-left: 50px">No Products</h3>
+                                <?php endif; ?>
                         </ul>
                         <hr class="soft"/>
                     </div>
+                    <!-- Content block end-->
                 </div>
-
+                <!-- Content end -->
                 <a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
-                <div class="pagination">
-                    <ul>
-                        <li><a href="#">&lsaquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">...</a></li>
-                        <li><a href="#">&rsaquo;</a></li>
-                    </ul>
-                </div>
+                <!-- Pagination -->
+                <?php echo $pagination->get(); ?>
+                <!-- Pagination end -->
                 <br class="clr"/>
             </div>
         </div>
     </div>
 </div>
-<!-- MainBody End ============================= -->
+<!-- MainBody end ============================= -->
 <?php include ROOT . '/views/layouts/footer.php'; ?>

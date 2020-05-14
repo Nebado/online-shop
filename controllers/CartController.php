@@ -1,8 +1,9 @@
 <?php
 
-class ProductController
-{  
-    public function actionView($productId)
+class CartController
+{
+    
+    public function actionIndex()
     {
         // Add categories list
         $categories = Category::getCategoriesList();
@@ -11,10 +12,7 @@ class ProductController
         /* --- I don't receive id subcategory within Category --- */
         $subCategories = Category::getSubCategoriesList(1);
         
-        // Returns product by id
-        $product = Product::getProductById($productId);
-        
-        require_once(ROOT . '/views/product/view.php');
+        require_once(ROOT . '/views/cart/index.php');
         return true;
     }
 }
