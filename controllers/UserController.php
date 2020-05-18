@@ -72,7 +72,6 @@ class UserController
 
                 if ($userId) {
                     User::auth($userId);
-                    header("Location: /");
                 }
                 $result = true;
             }            
@@ -111,7 +110,7 @@ class UserController
                 $errors[] = 'Password must be at least 6 characters';
             }
             
-            if (!$errors) {
+            if ($errors == false) {
                 $userId = User::login($email, $password);
                 if ($userId) {
                     User::auth($userId);

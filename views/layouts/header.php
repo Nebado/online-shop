@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Bootshop online Shopping cart</title>
+        <title>Online Shop</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -47,7 +47,9 @@
                             <a href="/cart/">
                                 <span class="btn btn-mini btn-primary">
                                     <i class="icon-shopping-cart icon-white"></i> 
-                                    [ 3 ] Itemes in your cart 
+                                    [<span id="cart-count">
+                                        <?php echo Cart::countItems();?>
+                                    </span>] Items in your cart 
                                 </span> 
                             </a> 
                         </div>

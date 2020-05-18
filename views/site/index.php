@@ -132,7 +132,7 @@
                                             <a class="btn" href="/product/<?php echo $product['id'];?>">
                                                 <i class="icon-zoom-in"></i>
                                             </a>
-                                            <a class="btn" href="/add/<?php echo $product['id'];?>">Add to
+                                            <a class="btn add-to-cart" data-id="<?php echo $product['id'];?>" href="#">Add to
                                                 <i class="icon-shopping-cart"></i>
                                             </a>
                                             <a class="btn btn-primary" href="#">
