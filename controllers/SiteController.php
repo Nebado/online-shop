@@ -19,6 +19,9 @@ class SiteController
         $featuredProducts = Product::getFeaturedProductsList();
         // Count items in Featured Products
         $count = Product::getCountItemsInFeaturedProducts();
+        
+        $totalPrice = Cart::getPrice();
+        $totalQuantity = Cart::countItems();
 
         // Connect view
         require_once(ROOT . '/views/site/index.php');

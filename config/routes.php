@@ -10,7 +10,11 @@ return array(
     // Product
     'product/([0-9]+)' => 'product/view/$1', // actionView in ProductController
     // Cart
+    'cart/checkout' => 'cart/checkout', // actionCheckout in CartController
+    'cart/add/([0-9])' => 'cart/add/$1', // actionAdd in CartController
     'cart/addAjax/([0-9]+)' => 'cart/addAjax/$1', // actionAddAjax in CartController
+    'cart/deleteProduct/([0-9]+)' => 'cart/deleteProduct/$1', // actionDeleteProduct in CarController
+    'cart/delete/([0-9])' => 'cart/delete/$1', // actionDelete in CartController
     'cart' => 'cart/index', // actionIndex in CartController
     // User
     'register' => 'user/register', // actionRegister in UserController
