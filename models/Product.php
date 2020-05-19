@@ -161,9 +161,7 @@ class Product
         if ($productId) {
             $db = Db::getConnection();
             
-            $sql = "SELECT id, name, code, price, title, category_id, sub_category_id,"
-                    . "availability, is_featured, description, is_new, image FROM product "
-                    . "WHERE status = '1' AND id = :productId ";
+            $sql = "SELECT * FROM product WHERE id = :productId";
             $result = $db->prepare($sql);
             $result->bindParam(":productId", $productId, PDO::PARAM_INT);
             $result->execute();
@@ -259,5 +257,117 @@ class Product
         }
         
         return $products;
+    }
+    
+    /**
+     * Return list of products
+     * @return array of products
+     */
+    public static function getProductsList()
+    {
+        // Connect to DB
+        $db = Db::getConnection();
+        
+        // Get and return results
+        $result = $db->query('SELECT id, name, price, code FROM product ORDER BY id ASC');
+        $productsList = array();
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $productsList[$i]['id'] = $row['id'];
+            $productsList[$i]['name'] = $row['name'];
+            $productsList[$i]['price'] = $row['price'];
+            $productsList[$i]['code'] = $row['code'];
+            $i++;
+        }
+        return $productsList;
+    }
+    
+    /**
+     * Delete product by id
+     * @param integer $id
+     * @return boolen
+     */
+    public static function deleteProductById($id)
+    {
+        // Connect to DB
+        $db = Db::getConnection();
+        
+        // Request string from DB
+        $sql = 'DELETE FROM product WHERE id = :id';
+        
+        // Get and return results. Use prepare request
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        return $result->execute();
+    }
+    
+    public static function createProduct($options)
+    {
+        // Connect to DB
+        $db = Db::getConnection();
+        
+        // Request string to DB
+        $sql = 'INSERT INTO product '
+                . '(name, code, price, category_id, sub_category_id, brand, availability, '
+                . 'description, is_new, is_featured, status) '
+                . 'VALUES '
+                . '(:name, :code, :price, :category_id, :subcategory_id, :brand, :availability,'
+                . ':description, :is_new, :is_featured, :status)';
+        
+        // Get and return results. To use prepare request
+        $result = $db->prepare($sql);
+        $result->bindParam(":name", $options['name'], PDO::PARAM_STR);
+        $result->bindParam(":code", $options['code'], PDO::PARAM_STR);
+        $result->bindParam(":price", $options['price'], PDO::PARAM_STR);
+        $result->bindParam(":category_id", $options['category_id'], PDO::PARAM_INT);
+        $result->bindParam(":subcategory_id", $options['subcategory_id'], PDO::PARAM_INT);
+        $result->bindParam(":brand", $options['brand'], PDO::PARAM_STR);
+        $result->bindParam(":availability", $options['availability'], PDO::PARAM_INT);
+        $result->bindParam(":description", $options['description'], PDO::PARAM_STR);
+        $result->bindParam(":is_new", $options['is_new'], PDO::PARAM_INT);
+        $result->bindParam(":is_featured", $options['is_featured'], PDO::PARAM_INT);
+        $result->bindParam(":status", $options['status'], PDO::PARAM_INT);
+        if ($result->execute()) {
+            return $db->lastInsertId();
+        }
+        return 0;
+    }
+    
+    public static function updateProductById($id, $options)
+    {
+        // Connect to DB
+        $db = Db::getConnection();
+        
+        // Request string to DB
+        $sql = "UPDATE product
+            SET
+                name            = :name,
+                code            = :code,
+                price           = :price,
+                category_id     = :category_id,
+                sub_category_id  = :subcategory_id,
+                brand           = :brand,
+                availability    = :availability,
+                description     = :description,
+                is_new          = :is_new,
+                is_featured     = :is_featured,
+                status          = :status
+            WHERE id = :id";
+        
+        // Get and return results. To use prepare request
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        $result->bindParam(":name", $options['name'], PDO::PARAM_STR);
+        $result->bindParam(":code", $options['code'], PDO::PARAM_STR);
+        $result->bindParam(":price", $options['price'], PDO::PARAM_STR);
+        $result->bindParam(":category_id", $options['category_id'], PDO::PARAM_INT);
+        $result->bindParam(":subcategory_id", $options['subcategory_id'], PDO::PARAM_INT);
+        $result->bindParam(":brand", $options['brand'], PDO::PARAM_STR);
+        $result->bindParam(":availability", $options['availability'], PDO::PARAM_INT);
+        $result->bindParam(":description", $options['description'], PDO::PARAM_STR);
+        $result->bindParam(":is_new", $options['is_new'], PDO::PARAM_INT);
+        $result->bindParam(":is_featured", $options['is_featured'], PDO::PARAM_INT);
+        $result->bindParam(":status", $options['status'], PDO::PARAM_INT);
+        return $result->execute();
     }
 }

@@ -3,7 +3,7 @@
 class User
 {
     /**
-     * Add a new user in DB 
+     * Add a new user
      * @param type $firstName
      * @param type $lastName
      * @param type $email
@@ -52,6 +52,12 @@ class User
         return true;
     }
     
+    /**
+     * Login user
+     * @param type $email
+     * @param type $password
+     * @return boolean
+     */
     public static function login($email, $password) {
         $db = Db::getConnection();
         
@@ -69,29 +75,32 @@ class User
     }
     
     /**
-     * Set user id in session
-     * @param type $userId
-     * @return boolean
+     * Remember user
+     * @param integer $userId
      */
     public static function auth($userId)
     {
+        // Write in user id in session
         $_SESSION['user'] = $userId;
-        return true;
-    }
-    /**
-     * Check user on auth
-     * @return type
-     */
-    public static function isAuth()
-    {
-        if ($_SESSION['user']) {
-            $userId = $_SESSION['user'];
-            return $userId;
-        } else {
-            header("Location: /login/");
-        }
     }
     
+    /**
+     * Return user id, if he is auth
+     * else redirect to login page
+     * @return string
+     */
+    public static function checkLogged()
+    {
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+            header("Location: /login/");
+    }
+    
+    /**
+     * Check user has a guest
+     * @return boolean
+     */
     public static function isGuest()
     {
         if (isset($_SESSION['user'])) {
@@ -183,6 +192,32 @@ class User
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Return array with information about user
+     * @param integer $id
+     * @return array
+     */
+    public static function getUserById($id)
+    {
+        $id = intval($id);
+        
+        $db = Db::getConnection();
+        $sql = "SELECT * FROM user WHERE id = :id";
+        
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        $result->execute();
+
+        while ($row = $result->fetch()) {
+            $user['first_name'] = $row['first_name'];
+            $user['last_name'] = $row['last_name'];
+            $user['email'] = $row['email'];
+            $user['role'] = $row['role'];
+        }
+        
+        return $user;
     }
 }
 
