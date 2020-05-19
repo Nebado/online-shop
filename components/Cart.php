@@ -31,6 +31,20 @@ class Cart
         return self::countItems();
     }
     
+    public static function deleteProduct($id)
+    {
+        $products = $_SESSION['products'];
+        unset($products[$id]);
+        return $_SESSION['products'] = $products;
+    }
+    
+    public static function deleteOneProduct($id)
+    {
+        $products = $_SESSION['products'];
+        $products[$id]--;
+        return $_SESSION['products'] = $products;
+    }
+    
     /**
      * Count of products in cart
      * @return int
@@ -68,6 +82,27 @@ class Cart
         }
         
         return $total;
+    }
+    
+    public static function getPrice()
+    {
+        $productsInCart = self::getProducts();
+
+        if ($productsInCart) {
+            $productsIds = array_keys($productsInCart);
+            $products = Product::getProductsByIds($productsIds);
+            
+            $totalPrice = Cart::getTotalPrice($products);
+            
+            return $totalPrice;
+        }
+    }
+    
+    public static function clear()
+    {
+        if (isset($_SESSION['products'])) {
+            unset($_SESSION['products']);
+        }
     }
 }
 

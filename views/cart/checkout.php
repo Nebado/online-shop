@@ -14,23 +14,23 @@
                         <span class="badge badge-warning pull-right">
                             $<?php echo $totalPrice; ?>
                         </span>
-                    </a>
+                    </a>>
                 </div>
                 <ul id="sideManu" class="nav nav-tabs nav-stacked">
                     <?php foreach ($categories as $category): ?>
                         <li class="<?php if ($category['id'] == 1) echo 'subMenu open'; ?>">
-                            <a href="/catalog/category-<?php echo $category['id']; ?>">
+                            <a href="/catalog/category-<?php echo $category['id'];?>">
                                 <?php echo $category['name']; ?>
                             </a>
                             <?php if ($category['id'] == 1): ?>
                                 <ul>
-                                    <li><a href="/catalog/category-<?php echo $category['id']; ?>">All</a></li>
+                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">All</a></li>
                                     <?php if (isset($subCategories) && is_array($subCategories)): ?>
                                         <?php foreach ($subCategories as $subCategory): ?>
                                             <li>
-                                                <a href="/catalog/category-<?php echo $category['id'] . "-" . $subCategory['id']; ?>">
+                                                <a href="/catalog/category-<?php echo $category['id']."-".$subCategory['id'];?>">
                                                     <i class="icon-chevron-right"></i>
-                                                    <?php echo $subCategory['name']; ?> 
+                                                        <?php echo $subCategory['name']; ?> 
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -62,49 +62,60 @@
                     </div>
                 </div>
             </div>
-            <!-- Sidebar End -->
+            <!-- Sidebar end -->
             <div class="span9">
                 <ul class="breadcrumb">
                     <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                    <li class="active">Login</li>
+                    <li class="active"> SHOPPING CART</li>
                 </ul>
-                <h3> Login</h3>	
+                <h3>  SHOPPING CART [ <small><?php echo Cart::countItems();?> Item(s) </small>]</h3>	
                 <hr class="soft"/>
-
-                <div class="row">
-                    <div class="span2"> &nbsp;</div>
-                    <div class="span4">
-                        <div class="well">
-                            <h5>ALREADY REGISTERED ?</h5>
-                            <?php if (isset($errors) && (is_array($errors))): ?>
-                                <?php foreach ($errors as $error): ?>
-                                    <ul>
-                                        <li> - <?php echo $error; ?></li>
-                                    </ul>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                            <form action="" method="post">
-                                <div class="control-group">
-                                    <label class="control-label" for="inputEmail1">Email</label>
-                                    <div class="controls">
-                                        <input class="span3" name="email" type="text" id="inputEmail1" placeholder="Email">
+                
+                <?php if ($result): ?>
+                    <p>Order is send</p>
+                <?php else: ?>
+                    <?php if (isset($errors) && is_array($errors)): ?>
+                    <ul>
+                        <?php foreach ($errors as $error): ?>
+                            <li> - <?php echo $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php endif; ?>
+                    
+                    <table class="table table-bordered">
+                        <tr><th style="text-transform: uppercase;">To place an order, fill out the form below, our manager will contact you </th></tr>
+                        <tr> 
+                            <td>
+                                <form class="form-horizontal" action="" method="post">
+                                    <div class="control-group">
+                                        <label class="control-label" for="inputName">Name </label>
+                                        <div class="controls">
+                                            <input name="userName" type="text" id="inputName" placeholder="Name">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputPassword1">Password</label>
-                                    <div class="controls">
-                                        <input type="password" name="password" class="span3"  id="inputPassword1" placeholder="Password">
+                                    <div class="control-group">
+                                        <label class="control-label" for="inputPhone">Phone </label>
+                                        <div class="controls">
+                                            <input name="userPhone" type="text" id="inputPhone" placeholder="Phone">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" name="submit" class="btn">Sign in</button> <a href="forgetpass.html">Forget password?</a>
+                                    <div class="control-group">
+                                        <label class="control-label" for="inputComment">Comment </label>
+                                        <div class="controls">
+                                            <textarea name="userComment" cols="21" rows="5" id="inputComment"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>	
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <button type="submit" name="submit" class="btn">SEND </button>
+                                        </div>
+                                    </div>
+                                </form>				  
+                            </td>
+                        </tr>
+                    </table>
+                <?php endif; ?>
+                <a href="/cart/" class="btn btn-large"><i class="icon-arrow-left"></i> Cart </a>
             </div>
         </div>
     </div>

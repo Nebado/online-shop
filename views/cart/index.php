@@ -5,7 +5,17 @@
         <div class="row">
             <!-- Sidebar -->
             <div id="sidebar" class="span3">
-                <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="/template/themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span></a></div>
+                <div class="well well-small">
+                    <a id="myCart" href="/cart/">
+                        <img src="/template/themes/images/ico-cart.png" alt="cart">
+                        <span id="cart-count">
+                            <?php echo $totalQuantity; ?>
+                        </span> Items in your cart 
+                        <span class="badge badge-warning pull-right">
+                            $<?php echo $totalPrice; ?>
+                        </span>
+                    </a>
+                </div>
                 <ul id="sideManu" class="nav nav-tabs nav-stacked">
                     <?php foreach ($categories as $category): ?>
                         <li class="<?php if ($category['id'] == 1) echo 'subMenu open'; ?>">
@@ -14,7 +24,7 @@
                             </a>
                             <?php if ($category['id'] == 1): ?>
                                 <ul>
-                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">Home</a></li>
+                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">All</a></li>
                                     <?php if (isset($subCategories) && is_array($subCategories)): ?>
                                         <?php foreach ($subCategories as $subCategory): ?>
                                             <li>
@@ -58,17 +68,17 @@
                     <li><a href="index.html">Home</a> <span class="divider">/</span></li>
                     <li class="active"> SHOPPING CART</li>
                 </ul>
-                <h3>  SHOPPING CART [ <small>3 Item(s) </small>]<a href="products.html" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>	
+                <h3>  SHOPPING CART [ <small><?php echo Cart::countItems();?> Item(s) </small>]<a href="products.html" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>	
                 <hr class="soft"/>
                 <table class="table table-bordered">
                     <tr><th> I AM ALREADY REGISTERED  </th></tr>
                     <tr> 
                         <td>
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" action="/login/" method="post">
                                 <div class="control-group">
-                                    <label class="control-label" for="inputUsername">Username</label>
+                                    <label class="control-label" for="inputEmail">Email</label>
                                     <div class="controls">
-                                        <input type="text" id="inputUsername" placeholder="Username">
+                                        <input type="text" id="inputEmail" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -79,7 +89,7 @@
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <button type="submit" class="btn">Sign in</button> OR <a href="register.html" class="btn">Register Now!</a>
+                                        <button type="submit" class="btn">Sign in</button> OR <a href="/register/" class="btn">Register Now!</a>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -90,123 +100,58 @@
                             </form>
                         </td>
                     </tr>
-                </table>		
-
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Description</th>
-                            <th>Quantity/Update</th>
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Tax</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td> <img width="60" src="themes/images/products/4.jpg" alt=""/></td>
-                            <td>MASSA AST<br/>Color : black, Material : metal</td>
-                            <td>
-                                <div class="input-append"><input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				</div>
-                            </td>
-                            <td>$120.00</td>
-                            <td>$25.00</td>
-                            <td>$15.00</td>
-                            <td>$110.00</td>
-                        </tr>
-                        <tr>
-                            <td> <img width="60" src="themes/images/products/8.jpg" alt=""/></td>
-                            <td>MASSA AST<br/>Color : black, Material : metal</td>
-                            <td>
-                                <div class="input-append"><input class="span1" style="max-width:34px" placeholder="1"  size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				</div>
-                            </td>
-                            <td>$7.00</td>
-                            <td>--</td>
-                            <td>$1.00</td>
-                            <td>$8.00</td>
-                        </tr>
-                        <tr>
-                            <td> <img width="60" src="themes/images/products/3.jpg" alt=""/></td>
-                            <td>MASSA AST<br/>Color : black, Material : metal</td>
-                            <td>
-                                <div class="input-append"><input class="span1" style="max-width:34px" placeholder="1"  size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>				</div>
-                            </td>
-                            <td>$120.00</td>
-                            <td>$25.00</td>
-                            <td>$15.00</td>
-                            <td>$110.00</td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="6" style="text-align:right">Total Price:	</td>
-                            <td> $228.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" style="text-align:right">Total Discount:	</td>
-                            <td> $50.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" style="text-align:right">Total Tax:	</td>
-                            <td> $31.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" style="text-align:right"><strong>TOTAL ($228 - $50 + $31) =</strong></td>
-                            <td class="label label-important" style="display:block"> <strong> $155.00 </strong></td>
-                        </tr>
-                    </tbody>
                 </table>
-
-
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td> 
-                                <form class="form-horizontal">
-                                    <div class="control-group">
-                                        <label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
-                                        <div class="controls">
-                                            <input type="text" class="input-medium" placeholder="CODE">
-                                            <button type="submit" class="btn"> ADD </button>
+                <?php if ($productsInCart != false): ?>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Description</th>
+                                <th>Quantity/Update</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($products as $product): ?>
+                                <tr>
+                                    <td> <img width="60" src="<?php echo $product['image'];?>" alt=""/></td>
+                                    <td><?php echo $product['title'];?><br/>Color : black, Material : metal</td>
+                                    <td>
+                                        <div class="input-append">
+                                            <input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" value="<?php echo $_SESSION['products'][$product['id']];?>" size="16" type="text">
+                                            <a href="/cart/delete/<?php echo $product['id'];?>">
+                                                <button class="btn" type="button">
+                                                    <i class="icon-minus"></i>
+                                                </button>
+                                            </a>   
+                                            <a href="/cart/add/<?php echo $product['id'];?>">
+                                                <button class="btn" type="button">
+                                                    <i class="icon-plus"></i>
+                                                </button>
+                                            </a>
+                                            <a href="/cart/deleteProduct/<?php echo $product['id'];?>">
+                                                <button class="btn btn-danger" type="button">
+                                                    <i class="icon-remove icon-white"></i>
+                                                </button>
+                                            </a>
                                         </div>
-                                    </div>
-                                </form>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-                <table class="table table-bordered">
-                    <tr><th>ESTIMATE YOUR SHIPPING </th></tr>
-                    <tr> 
-                        <td>
-                            <form class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label" for="inputCountry">Country </label>
-                                    <div class="controls">
-                                        <input type="text" id="inputCountry" placeholder="Country">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="inputPost">Post Code/ Zipcode </label>
-                                    <div class="controls">
-                                        <input type="text" id="inputPost" placeholder="Postcode">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" class="btn">ESTIMATE </button>
-                                    </div>
-                                </div>
-                            </form>				  
-                        </td>
-                    </tr>
-                </table>		
-                <a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-                <a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
-
+                                    </td>
+                                    <td>$<?php echo $product['price'];?></td>
+                                    <td>$<?php echo $_SESSION['products'][$product['id']] * $product['price'];?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <tr>
+                                <td colspan="4" style="text-align:right"><strong>TOTAL PRICE: </strong></td>
+                                <td class="label label-important" style="display:block"> <strong> $<?php echo $totalPrice; ?> </strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <h3>No Products In Cart</h3>
+                <?php endif; ?>
+                <a href="/catalog/category-1/" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+                <a href="/cart/checkout/" class="btn btn-large pull-right"><i class="icon-arrow-right right"></i> Next </a>
             </div>
         </div>
     </div>
