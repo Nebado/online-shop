@@ -141,7 +141,7 @@ class CartController {
                     $userId = User::checkLogged();
                     $user = User::getUserById($userId);
 
-                    $userName = $user['name'];
+                    $userName = $user['first_name'];
                 }
             }
         }

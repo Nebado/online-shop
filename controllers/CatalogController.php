@@ -20,6 +20,9 @@ class CatalogController
         // Type array
         $catProducts = Product::getProductsListInCategory(6, $categoryId, $page);
         
+        $totalPrice = Cart::getPrice();
+        $totalQuantity = Cart::countItems();
+        
         require_once(ROOT . '/views/catalog/category.php');
         return true;
     }
@@ -42,6 +45,9 @@ class CatalogController
         // Get products in subcategories
         // Type array
         $subProducts = Product::getProductsListInSubCategory($categoryId, $subCategoryId, $page);
+        
+        $totalPrice = Cart::getPrice();
+        $totalQuantity = Cart::countItems();
         
         require_once(ROOT . '/views/catalog/subcategory.php');
         return true;

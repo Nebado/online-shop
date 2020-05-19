@@ -90,7 +90,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="inputName">Name </label>
                                         <div class="controls">
-                                            <input name="userName" type="text" id="inputName" placeholder="Name">
+                                            <input name="userName" type="text" id="inputName" value="<?php echo $userName; ?>" placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="control-group">
