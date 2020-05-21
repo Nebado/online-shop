@@ -17,6 +17,8 @@ class AdminCategoryController extends AdminBase
         // Get list of categories
         $categoriesList = Category::getCategoriesListAdmin();
         
+        $subcategoriesList = Category::getSubCategoriesListAdmin();
+        
         // Connect to view
         require_once(ROOT . '/views/admin_category/index.php');
         return true;
@@ -32,7 +34,7 @@ class AdminCategoryController extends AdminBase
             // If form is send
             // Get data from form
             $name = $_POST['name'];
-            $sortOrder = $_POST['sort_order'];
+            $sortOrder = $_POST['sortOrder'];
             $status = $_POST['status'];
             
             // Flag of errors in form
@@ -71,7 +73,7 @@ class AdminCategoryController extends AdminBase
             // If form is send
             // Get data from form
             $name = $_POST['name'];
-            $sortOrder = $_POST['sort_order'];
+            $sortOrder = $_POST['sortOrder'];
             $status = $_POST['status'];
             
             // Save changes

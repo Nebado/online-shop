@@ -83,6 +83,8 @@ class UserController
     
     public function actionLogin()
     {
+        $totalPrice = Cart::getPrice();
+        $totalQuantity = Cart::countItems();
         // Add categories list
         $categories = Category::getCategoriesList();
         

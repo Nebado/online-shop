@@ -20,8 +20,10 @@ class CartController {
             $products = Product::getProductsByIds($productsIds);
             
             $totalPrice = Cart::getTotalPrice($products);
-            $totalQuantity = Cart::countItems();
         }
+        
+        $totalPrice = false;
+        $totalQuantity = Cart::countItems();
 
         require_once(ROOT . '/views/cart/index.php');
         return true;
