@@ -251,6 +251,7 @@ class Product
         while($row = $result->fetch()) {
             $products[$i]['id'] = $row['id'];
             $products[$i]['name'] = $row['name'];
+            $products[$i]['code'] = $row['code'];
             $products[$i]['price'] = $row['price'];
             $products[$i]['title'] = $row['title'];
             $products[$i]['image'] = $row['image'];
@@ -370,5 +371,24 @@ class Product
         $result->bindParam(":is_featured", $options['is_featured'], PDO::PARAM_INT);
         $result->bindParam(":status", $options['status'], PDO::PARAM_INT);
         return $result->execute();
+    }
+    
+    public static function getProductsListInOrder($id)
+    {
+        // Get information about order
+        $order = Order::getOrderById($id);
+        
+        $productsJson = $order['products'];
+        $productsObject = json_decode($productsJson);
+        $productsArray = [];
+        
+        foreach ($productsObject as $id => $quantity) {
+            $productsArray[$id] = $quantity;
+        }
+        
+        $productsIds = array_keys($productsArray);
+        $products = Product::getProductsByIds($productsIds);
+        
+        return $products;
     }
 }

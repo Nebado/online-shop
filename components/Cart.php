@@ -84,6 +84,17 @@ class Cart
         return $total;
     }
     
+    public static function getTotalPriceInOrder($products, $quantity)
+    {
+        $total = 0;
+        
+        foreach ($products as $item) {
+            $total += $item['price'] * $quantity[$item['id']];
+        }
+        
+        return $total;
+    }
+    
     public static function getPrice()
     {
         $productsInCart = self::getProducts();

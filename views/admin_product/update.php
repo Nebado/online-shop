@@ -13,9 +13,7 @@
                 </ol>
             </div>
 
-            <a href="/admin/product/create" class="btn btn-default back"><i class="fa fa-plus"></i>Add product</a>
-
-            <h4>Add new product</h4>
+            <h4>Edit the Product</h4>
 
             <br/>
             <?php if(isset($errors) && (is_array($errors))): ?>

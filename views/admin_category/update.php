@@ -13,9 +13,7 @@
                 </ol>
             </div>
 
-            <a href="/admin/category/create" class="btn btn-default back"><i class="fa fa-plus"></i>Add Category</a>
-
-            <h4>Add new Category</h4>
+            <h4>Edit the Category</h4>
 
             <br/>
             <?php if(isset($errors) && (is_array($errors))): ?>
