@@ -79,7 +79,7 @@
                             <?php foreach ($catProducts as $product): ?>
                                 <div class="row">
                                     <div class="span2">
-                                        <img class="product" src="<?php echo $product['image'];?>" alt=""/>
+                                        <img class="product" src="<?php echo Product::getImage($product['id']); ?>" alt=""/>
                                     </div>
                                     <div class="span4">
                                         <h3>
@@ -126,7 +126,7 @@
                                     <li class="span3">
                                         <div class="thumbnail">
                                             <a href="/product/<?php echo $product['id'];?>">
-                                                <img class="product" src="<?php echo $product['image'];?>" alt=""/>
+                                                <img class="product" src="<?php echo Product::getImage($product['id']); ?>" alt=""/>
                                             </a>
                                             <div class="caption">
                                                 <h5><?php echo $product['name'];?></h5>

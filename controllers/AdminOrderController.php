@@ -81,14 +81,14 @@ class AdminOrderController extends AdminBase
         if (isset($_POST['submit'])) {
             // If form is send
             // Delete product
-            Product::deleteProductById($id);
+            Order::deleteOrderById($id);
             
             // Redirect user on page manage of products
-            header("Location: /admin/product");
+            header("Location: /admin/order");
         }
         
         // Connect to view
-        require_once(ROOT . '/views/admin_product/delete.php');
+        require_once(ROOT . '/views/admin_order/delete.php');
         return true;
     }
 }

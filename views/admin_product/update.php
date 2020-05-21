@@ -81,7 +81,7 @@
                 <div class="control-group">
                     <label class="control-label" for="image">Image</label>
                     <div class="controls">
-                        <img src="" width="200" alt="" /> 
+                        <img src="<?php echo Product::getImage($product['id']); ?>" width="200" alt="" /><br/>
                         <input type="file" name="image" id="image" value="<?php echo $product['image']; ?>">
                     </div>
                 </div>

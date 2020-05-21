@@ -1,4 +1,4 @@
-<div  id="footerSection">
+<div  id="footerSectionAdmin">
     <div class="container">
         <div class="row"></div>
         <p class="pull-right">&copy; Online shop</p>

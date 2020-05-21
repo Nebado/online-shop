@@ -85,6 +85,19 @@ class Order
         return $result->fetch();
     }
     
+    public static function deleteOrderById($id)
+    {
+        // Connect to DB
+        $db = Db::getConnection();
+        
+        $sql = 'DELETE FROM product_order WHERE id = :id';
+        
+        // Get and return  results (use prepare request)
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        $result->execute();
+    }
+    
     public static function getQuantityInOrder($id)
     {
         // Get information about order
@@ -99,6 +112,24 @@ class Order
         }
         
         return $productsArray;
+    }
+    
+    public static function getStatusText($status)
+    {
+        switch ($status) {
+            case '1':
+                return 'New order';
+                break;
+            case '2':
+                return 'In processing';
+                break;
+            case '3':
+                return 'Delivery';
+                break;
+            case '4':
+                return 'Closed';
+                break;
+        }
     }
 }
 

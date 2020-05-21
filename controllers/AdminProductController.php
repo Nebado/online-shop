@@ -66,7 +66,7 @@ class AdminProductController extends AdminBase
                 if ($id) {
                     // Check uploading trough form image
                     if (is_uploaded_file($_FILES['image']['tmp_name'])) {
-                        move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/");
+                        move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/products/{$id}.jpg");
                     };
                     
                     header("Location: /admin/product");
@@ -112,7 +112,7 @@ class AdminProductController extends AdminBase
             if (Product::updateProductById($id, $options)) {
                 // If record is saved
                 if (is_uploaded_file($_FILES['image']['tmp_name'])) {
-                    move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/");
+                    move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/products/{$id}.jpg");
                 }
             }
             

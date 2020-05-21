@@ -38,7 +38,7 @@
                         <td><?php echo $order['user_id'];?></td>
                         <td><?php echo $order['date'];?></td>
                         <td><?php echo $order['products'];?></td>
-                        <td><?php echo $order['status'];?></td>
+                        <td><?php echo Order::getStatusText($order['status']); ?></td>
                         <td><a href="/admin/order/update/<?php echo $order['id'];?>" title="Edit">Edit</a></td>
                         <td><a href="/admin/order/delete/<?php echo $order['id'];?>" title="Edit">Delete</a></td>
                     </tr>

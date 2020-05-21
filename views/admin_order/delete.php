@@ -8,16 +8,16 @@
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
                     <li><a href="/admin">Admin Panel</a></li>
-                    <li><a href="/admin/product">Manage Products</a></li>
-                    <li class="active">Delete Product</li>
+                    <li><a href="/admin/product">Manage Orders</a></li>
+                    <li class="active">Delete Order</li>
                 </ol>
             </div>
 
-            <h4>Delete the product # <?php echo $id; ?></h4>
+            <h4>Delete the order # <?php echo $id; ?></h4>
 
             <br/>
 
-            <p>Are sure that delete this product?</p>
+            <p>Are sure that delete this order?</p>
             <form method="post">
                 <input type="submit" name="submit" value="Delete" />
             </form>
