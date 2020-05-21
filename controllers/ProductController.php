@@ -14,6 +14,9 @@ class ProductController
         // Returns product by id
         $product = Product::getProductById($productId);
         
+        $totalPrice = Cart::getPrice();
+        $totalQuantity = Cart::countItems();
+        
         require_once(ROOT . '/views/product/view.php');
         return true;
     }

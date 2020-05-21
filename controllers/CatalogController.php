@@ -39,11 +39,7 @@ class CatalogController
         $total = Product::getCountItemsInSubCategory($subCategoryId);
         
         $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
-        // Get products in categories
-        // Type array
         
-        // Get products in subcategories
-        // Type array
         $subProducts = Product::getProductsListInSubCategory($categoryId, $subCategoryId, $page);
         
         $totalPrice = Cart::getPrice();

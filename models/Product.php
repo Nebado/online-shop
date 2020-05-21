@@ -396,7 +396,7 @@ class Product
     {
         $noImage = 'no-image.jpg';
         
-        $path = '/upload/images/';
+        $path = '/upload/images/products/';
         
         // Path to image of product
         $pathToProductImage = $path . $id . '.jpg';

@@ -164,7 +164,7 @@
                                                             <i class="tag"></i>
                                                         <?php endif; ?>
                                                         <a href="/product/<?php echo $fproduct['id'];?>">
-                                                            <img class="product" src="<?php echo $fproduct['image'];?>" alt="">
+                                                            <img class="product" src="<?php echo Product::getImage($product['id']); ?>" alt="">
                                                         </a>
                                                         <div class="caption">
                                                             <h5><?php echo $fproduct['name'];?></h5>
@@ -193,7 +193,7 @@
                                                             <i class="tag"></i>
                                                         <?php endif; ?>
                                                         <a href="/product/<?php echo $fproduct['id'];?>">
-                                                            <img class="product" src="<?php echo $fproduct['image'];?>" alt="">
+                                                            <img class="product" src="<?php echo Product::getImage($product['id']); ?>" alt="">
                                                         </a>
                                                         <div class="caption">
                                                             <h5><?php echo $fproduct['name'];?></h5>

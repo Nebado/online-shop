@@ -71,8 +71,8 @@
                 </ul>	
                 <div class="row">	  
                     <div id="gallery" class="span3">
-                        <a href="<?php echo $product['image'];?>" title="Fujifilm FinePix S2950 Digital Camera">
-                            <img src="<?php echo $product['image'];?>" style="width:100%" alt="Fujifilm FinePix S2950 Digital Camera"/>
+                        <a href="<?php echo Product::getImage($product['id']); ?>" title="Fujifilm FinePix S2950 Digital Camera">
+                            <img src="<?php echo Product::getImage($product['id']); ?>" style="width:100%" alt="Fujifilm FinePix S2950 Digital Camera"/>
                         </a>
                         <div id="differentview" class="moreOptopm carousel slide">
                             <div class="carousel-inner">
@@ -113,7 +113,11 @@
                                 <label class="control-label"><span>$<?php echo $product['price'];?></span></label>
                                 <div class="controls">
                                     <input type="number" class="span1" placeholder="Qty."/>
-                                    <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                                    <a href="/cart/add/<?php echo $product['id']; ?>">
+                                        <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart 
+                                            <i class=" icon-shopping-cart"></i>
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </form>

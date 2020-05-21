@@ -23,7 +23,7 @@
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
-            <form class="form-horizontal" action="" method="post">
+            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                 <div class="control-group">
                     <label class="control-label" for="name">Name <sup>*</sup></label>
                     <div class="controls">

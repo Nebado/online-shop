@@ -112,6 +112,8 @@
                                     </div>
                                 </div>
                             <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No products</p>
                         <?php endif; ?>
                         <hr class="soft"/>
                     </div>
