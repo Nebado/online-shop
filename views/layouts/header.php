@@ -15,13 +15,13 @@
         <!--<link rel="stylesheet/less" type="text/css" href="/template/themes/less/bootshop.less">
         <script src="/template/themes/js/less.js" type="text/javascript"></script> -->
 
-        <!-- Bootstrap style --> 
-        <link id="callCss" rel="stylesheet" href="/template/themes/bootshop/bootstrap.min.css" media="screen"/>
+        <!-- Bootstrap style -->
+        <link id="callCss" rel="stylesheet" href="/template/themes/shop/bootstrap.min.css" media="screen"/>
         <link href="/template/themes/css/base.css" rel="stylesheet" media="screen"/>
-        <!-- Bootstrap style responsive -->	
+        <!-- Bootstrap style responsive -->
         <link href="/template/themes/css/bootstrap-responsive.min.css" rel="stylesheet"/>
         <link href="/template/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
-        <!-- Google-code-prettify -->	
+        <!-- Google-code-prettify -->
         <link href="/template/themes/js/google-code-prettify/prettify.css" rel="stylesheet"/>
         <!-- fav and touch icons -->
         <link rel="shortcut icon" href="/template/themes/images/ico/favicon.ico">
@@ -46,12 +46,12 @@
                             <a href="#"><span class="">$</span></a>
                             <a href="/cart/">
                                 <span class="btn btn-mini btn-primary">
-                                    <i class="icon-shopping-cart icon-white"></i> 
+                                    <i class="icon-shopping-cart icon-white"></i>
                                     [<span id="cart-count">
                                         <?php echo Cart::countItems();?>
-                                    </span>] Items in your cart 
-                                </span> 
-                            </a> 
+                                    </span>] Items in your cart
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                                 <option>HEALTH & BEAUTY </option>
                                 <option>SPORTS & LEISURE </option>
                                 <option>BOOKS & ENTERTAINMENTS </option>
-                            </select> 
+                            </select>
                             <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
                         </form>
                         <ul id="topMenu" class="nav pull-right">
@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="form-horizontal loginFrm" method="post" action="/login/">
-                                            <div class="control-group">								
+                                            <div class="control-group">
                                                 <input type="text" name="email" id="inputEmail" placeholder="Email">
                                             </div>
                                             <div class="control-group">
