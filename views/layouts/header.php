@@ -77,7 +77,7 @@
                             <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
                         </form>
                         <ul id="topMenu" class="nav pull-right">
-                            <li class=""><a href="contact.html">Contact</a></li>
+                            <li class=""><a href="/contact">Contact</a></li>
                             <li class="">
                                 <?php if (User::isGuest()): ?>
                                     <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>

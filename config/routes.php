@@ -16,6 +16,8 @@ return array(
     'cart/deleteProduct/([0-9]+)' => 'cart/deleteProduct/$1', // actionDeleteProduct in CarController
     'cart/delete/([0-9])' => 'cart/delete/$1', // actionDelete in CartController
     'cart' => 'cart/index', // actionIndex in CartController
+    // Contact
+    'contact' => 'contact/index', // actionIndex in ContactController
     // User
     'register' => 'user/register', // actionRegister in UserController
     'login' => 'user/login', // actionLogin in UserController
