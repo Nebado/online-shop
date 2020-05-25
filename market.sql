@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 21 2020 г., 15:49
+-- Время создания: Май 25 2020 г., 15:46
 -- Версия сервера: 5.7.28
 -- Версия PHP: 5.6.40
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `image` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `product`
@@ -83,8 +83,24 @@ INSERT INTO `product` (`id`, `name`, `code`, `brand`, `price`, `title`, `descrip
 (2, 'Samsung S8', '23411', 'Samsung', 700, NULL, 'Samsung is the best', 1, 1, 1, 1, 1, NULL, 1),
 (3, 'LG', '178375', 'LG', 565, NULL, 'LG is okey', 1, 1, 1, 1, 1, NULL, 1),
 (4, 'Rasper', '28341', 'Rasper', 1000, NULL, 'Rasper is inovation in the world', 1, 1, 1, 1, 1, NULL, 1),
-(5, 'Lenovo R33', '234141', 'Lenovo', 145, NULL, 'Lenovo', 1, 1, 1, 1, 0, NULL, 1),
-(6, 'Fly A38', '32424', 'Fly', 180, NULL, 'Fly', 1, 1, 1, 1, 0, NULL, 1);
+(5, 'Lenovo R33', '234141', 'Lenovo', 145, NULL, 'Lenovo', 1, 1, 1, 1, 1, NULL, 1),
+(6, 'Fly A38', '32424', 'Fly', 180, NULL, 'Fly', 1, 1, 1, 1, 1, NULL, 1),
+(7, 'Sony S1', '23841', 'Sony', 494, NULL, 'Company Sony', 1, 1, 1, 1, 1, NULL, 1),
+(8, 'Dell XPS 15', '24324', 'Dell', 3000, NULL, 'Company Dell', 1, 2, 1, 1, 1, NULL, 1),
+(9, 'LG X38', '23432', 'LG', 1300, NULL, 'Company LG', 1, 2, 1, 1, 1, NULL, 1),
+(10, 'HP Probook 14', '3848', 'HP', 1003, NULL, 'Company HP', 1, 2, 1, 1, 1, NULL, 1),
+(11, 'Lenovo SP2', '3844', 'Lenovo', 800, NULL, 'Company Lenovo', 1, 2, 1, 1, 1, NULL, 1),
+(12, 'Honor R48', '37472', 'Honor', 3000, NULL, 'Company Honor', 1, 2, 1, 1, 1, NULL, 1),
+(13, 'Acer Ri38', '388421', 'Acer', 3000, NULL, 'Company Acer', 1, 2, 1, 1, 1, NULL, 1),
+(14, 'Stream Q5', '324235', 'Stream', 10000, NULL, 'Company Stream', 1, 2, 1, 1, 1, NULL, 1),
+(15, 'Canon A3', '34234', 'Canon ', 5000, NULL, 'Company Canon', 1, 3, 1, 1, 1, NULL, 1),
+(16, 'Nikon R8', '34324', 'Nikon', 2853, NULL, 'Company Nikon', 1, 3, 1, 1, 1, NULL, 1),
+(17, 'Fjiame SD', '342421', 'Fjiame', 2000, NULL, 'Company Fjiame', 1, 3, 1, 1, 1, NULL, 1),
+(18, 'Midrange D2', '34242', 'Midrange ', 4000, NULL, 'Company Midrange ', 1, 3, 1, 1, 1, NULL, 1),
+(19, 'Lumix TI3', '115543', 'Lumix', 5000, NULL, 'Company Lumix', 1, 3, 1, 1, 1, NULL, 1),
+(20, 'Rosa Ki 10', '237415', 'Rosa ', 4300, NULL, 'Company Rosa', 1, 3, 1, 1, 1, NULL, 1),
+(21, 'Sand T14', '3424', 'Sand ', 3002, NULL, 'Company Sand', 1, 3, 1, 1, 1, NULL, 1),
+(22, 'Yeti R7', '2384', 'Yeti ', 2000, NULL, 'Company Yeti', 1, 4, 1, 1, 1, NULL, 1);
 
 -- --------------------------------------------------------
 
