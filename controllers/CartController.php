@@ -27,11 +27,10 @@ class CartController {
             
             // Get an array with full information about the necessary products.
             $products = Product::getProductsByIds($productsIds);
-            
-            // Get the total price of products
-            $totalPrice = Cart::getTotalPrice($products);
         }
         
+        // Get the total price of products
+        $totalPrice = Cart::getTotalPrice($products);
         $totalQuantity = Cart::countItems();
 
         // Connect the view

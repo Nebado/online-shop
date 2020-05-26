@@ -115,8 +115,8 @@
                         <tbody>
                             <?php foreach ($products as $product): ?>
                                 <tr>
-                                    <td> <img width="60" src="<?php echo $product['image'];?>" alt=""/></td>
-                                    <td><?php echo $product['title'];?><br/>Color : black, Material : metal</td>
+                                    <td> <img width="60" src="<?php echo Product::getImage($product['id']); ?>" alt=""/></td>
+                                    <td><br/>Color : black, Material : metal</td>
                                     <td>
                                         <div class="input-append">
                                             <input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" value="<?php echo $_SESSION['products'][$product['id']];?>" size="16" type="text">

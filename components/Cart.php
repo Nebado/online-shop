@@ -127,9 +127,9 @@ class Cart
                 // Find the total price: price of products * quantity of products
                 $total += $item['price'] * $productsInCart[$item['id']];
             }
+            return $total;
         }
-        
-        return $total;
+        return 0;
     }
     
     /**
