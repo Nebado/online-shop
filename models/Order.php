@@ -1,13 +1,25 @@
 <?php
 
+/**
+ * Order class - model for working with orders
+ */
 class Order
 {
-    
+    /**
+     * Saving order
+     * @param string $userName <p>Name</p>
+     * @param string $userPhone <p>Phone</p>
+     * @param string $userComment <p>Comment</p>
+     * @param integer $userId <p>user id</p>
+     * @param array $products <p>Array of goods</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function save($userName, $userPhone, $userComment, $userId, $products)
     {
-        
+        // DB Connection
         $db = Db::getConnection();
         
+        // DB query text
         $sql = "INSERT INTO product_order (user_name, user_phone, user_comment, user_id, products) "
                 . "VALUES (:user_name, :user_phone, :user_comment, :user_id, :products)";
         
@@ -23,11 +35,22 @@ class Order
         return $result->execute();
     }
     
+    /**
+     * Edits an order with a given id
+     * @param integer $id <p>product id</p>
+     * @param string $userName <p>Client Name</p>
+     * @param string $userPhone <p>Customer Phone</p>
+     * @param string $userComment <p>Customer Comment</p>
+     * @param string $date <p>Date of issue</p>
+     * @param integer $status <p>Status <i>(on "1", off "0")</i></p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function updateOrderById($id, $options)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
+        // DB query text
         $sql = "UPDATE product_order SET "
                 . "user_name = :userName,"
                 . "user_phone = :userPhone,"
@@ -36,7 +59,7 @@ class Order
                 . "status = :status "
                 . "WHERE id = :id";
         
-        // Get and return results (to use prepare request)
+        // Getting and returning the results. Prepare Request Used.
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
         $result->bindParam(":userName", $options['userName'], PDO::PARAM_STR);
@@ -47,52 +70,74 @@ class Order
         $result->execute();
     }
     
+    /**
+     * Returns a list of orders
+     * @return array <p>Order List</p>
+     */
     public static function getOrdersList()
     {
-        // Conect to DB
+        // DB Connection
         $db = Db::getConnection();
         
-        $orders = array();
-        
+        // DB query
         $sql = "SELECT id, user_name, date, status FROM product_order";
-        $result = $db->query($sql);
         
+        // Getting and returning results
+        $result = $db->query($sql);
+        $ordersList = array();
         $i = 0;
         while ($row = $result->fetch()) {
-            $orders[$i]['id'] = $row['id'];
-            $orders[$i]['user_name'] = $row['user_name'];
-            $orders[$i]['date'] = $row['date'];
-            $orders[$i]['status'] = $row['status'];
+            $ordersList[$i]['id'] = $row['id'];
+            $ordersList[$i]['user_name'] = $row['user_name'];
+            $ordersList[$i]['date'] = $row['date'];
+            $ordersList[$i]['status'] = $row['status'];
             $i++;
         }
         
-        return $orders;
+        return $ordersList;
     }
     
+    /**
+     * Returns the order with the specified id
+     * @param integer $id <p> id </p>
+     * @return array <p>Array with order information</p>
+     */
     public static function getOrderById($id)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
+        // DB query
         $sql = "SELECT * FROM product_order WHERE id = :id";
         
         // Get and returns results (use prepare request)
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
+        
+        // Indicate that we want to get data in the form of an array
         $result->setFetchMode(PDO::FETCH_ASSOC);
+        
+        // Execute the request
         $result->execute();
         
+        // Return data
         return $result->fetch();
     }
     
+    /**
+     * Deletes an order with the given id
+     * @param integer $id <p>order id</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function deleteOrderById($id)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
+        // DB query
         $sql = 'DELETE FROM product_order WHERE id = :id';
         
-        // Get and return  results (use prepare request)
+        // Getting and returning the results
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
         $result->execute();
@@ -114,6 +159,12 @@ class Order
         return $productsArray;
     }
     
+    /**
+     * Returns a text explanation of the status for the order: <br/>
+     * <i> 1 - New order, 2 - In processing, 3 - Delivered, 4 - Closed </i>
+     * @param integer $status <p> Status </p>
+     * @return string <p> Text explanation </p>
+     */
     public static function getStatusText($status)
     {
         switch ($status) {
@@ -124,7 +175,7 @@ class Order
                 return 'In processing';
                 break;
             case '3':
-                return 'Delivery';
+                return 'Delivered';
                 break;
             case '4':
                 return 'Closed';

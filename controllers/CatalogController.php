@@ -1,46 +1,55 @@
 <?php
 
+/**
+ * CatalogController controller
+ * Catalog
+ */
 class CatalogController
 {
-    
+    /**
+     * Action for the Product Category page
+     */
     public function actionCategory($categoryId, $page = 1)
     {
-        // Add categories list
+        // List of categories for the left menu
         $categories = Category::getCategoriesList();
         
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        // List of subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
         
-        // Get count items in current category
-        $total = Product::getCountItemsInCategory($categoryId);
+        // List of products in the category
+        $categoryProducts = Product::getProductsListByCategory($categoryId, $page);
         
-        $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
-        // Get products in categories
-        // Type array
-        $catProducts = Product::getProductsListInCategory(6, $categoryId, $page);
+        // Total number of products (required for page navigation)
+        $total = Product::getTotalProductsInCategory($categoryId);
+        
+        // Create a Pagination Object - Pagination
+        $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');      
         
         $totalPrice = Cart::getPrice();
         $totalQuantity = Cart::countItems();
         
+        // Connect the view
         require_once(ROOT . '/views/catalog/category.php');
         return true;
     }
     
     public function actionSubCategory($categoryId, $subCategoryId, $page = 1)
     {
-        // Add categories list
+        // List of categories for the left menu
         $categories = Category::getCategoriesList();
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        
+        // List of subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
         
-        // Get count items in current category
-        $total = Product::getCountItemsInSubCategory($subCategoryId);
+        // List of products in the subcategory
+        $subCategoryProducts = Product::getProductsListBySubCategory($categoryId, $subCategoryId, $page);
         
+        // Total number of products (required for page navigation)
+        $total = Product::getTotalProductsInSubCategory($subCategoryId);
+        
+        // Create a Pagination Object - Pagination
         $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
-        
-        $subProducts = Product::getProductsListInSubCategory($categoryId, $subCategoryId, $page);
         
         $totalPrice = Cart::getPrice();
         $totalQuantity = Cart::countItems();

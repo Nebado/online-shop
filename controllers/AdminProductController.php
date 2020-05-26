@@ -1,42 +1,42 @@
 <?php
 
 /**
- * Controller AdminProductController
- * Manage products in Admin Panel
- */
+ * AdminProductController Controller
+ * Product management in admin panel
+ */
 class AdminProductController extends AdminBase
 {
     /**
-     * Action for page "Manage products"
+     * Action for the product management page
      */
     public function actionIndex()
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Get list of products
+        // Get a list of products
         $productsList = Product::getProductsList();
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin_product/index.php');
         return true;
     }
     
     public function actionCreate()
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Get list of categories for pop list
+        // Get a list of categories for the drop-down list
         $categoriesList = Category::getCategoriesListAdmin();
         
-        // Get list of subcategories for pop list
+        // Get a list of subcategories for the drop-down list
         $subCategoriesList = Category::getSubCategoriesListAdmin();
         
-        // Processing Form
+        // Form processing
         if (isset($_POST['submit'])) {
-            // If form is send
-            // Get data from form
+            // If form is submitted
+            // Get the data from the form
             $options['name'] = $_POST['name'];
             $options['code'] = $_POST['code'];
             $options['price'] = $_POST['price'];
@@ -49,53 +49,59 @@ class AdminProductController extends AdminBase
             $options['is_featured'] = $_POST['is_featured'];
             $options['status'] = $_POST['status'];
             
-            // Flag of errors in form
+            // Flag of errors in the form
             $errors = false;
             
-            // Validate
+            // If necessary, you can validate the values as needed.
             if (!isset($options['name']) || empty($options['name'])) {
                 $errors[] = "Input fields";
             }
             
             if ($errors == false) {
-                // If not errors
-                // Add new product
+                // If there are not errors
+                // Add a new product
                 $id = Product::createProduct($options);
                 
-                // If record is added
+                // If a record is added
                 if ($id) {
-                    // Check uploading trough form image
+                    // Check if the image was loaded through the form
                     if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+                        // If it loaded, move it to the desired folder, give a new name
                         move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/products/{$id}.jpg");
                     };
                     
+                    // Redirect the user to the product management page
                     header("Location: /admin/product");
                 }
             }
         }
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin_product/create.php');
         return true;
     }
     
+    /**
+     * Action for the Edit Product page
+     */
     public function actionUpdate($id)
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Get list of categories for pop list
+        // Get a list of categories for the drop-down list
         $categoriesList = Category::getCategoriesListAdmin();
         
-        // Get list of subcategories for pop list
+        // Get list of subcategories for the drop-down list
         $subCategoriesList = Category::getSubCategoriesListAdmin();
         
+        // Get data on a specific order
         $product = Product::getProductById($id);
         
-        // Processing Form
+        // Form processing
         if (isset($_POST['submit'])) {
-            // If form is send
-            // Get data from form
+            // If form is submitted
+            // Get the data from the form
             $options['name'] = $_POST['name'];
             $options['code'] = $_POST['code'];
             $options['price'] = $_POST['price'];
@@ -110,37 +116,43 @@ class AdminProductController extends AdminBase
             
             // Save changes
             if (Product::updateProductById($id, $options)) {
-                // If record is saved
+                
+                // If a record is saved
+                // Check if the image was loaded through the form
                 if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+                    // If it loaded, move it to the desired folder, give a new name
                     move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/products/{$id}.jpg");
                 }
             }           
             
-            // Redirect user on page manage products
+            // Redirect the user to the product managment page
             header("Location: /admin/product");
         }
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin_product/update.php');
         return true;
     }
     
+    /**
+     * Action for the Delete Product page
+     */
     public function actionDelete($id)
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Processing Form
+        // Form processing
         if (isset($_POST['submit'])) {
-            // If form is send
-            // Delete product
+            // If form is submitted
+            // Delete the product
             Product::deleteProductById($id);
             
-            // Redirect user on page manage of products
+            // Redirect the user to the product management page
             header("Location: /admin/product");
         }
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin_product/delete.php');
         return true;
     }

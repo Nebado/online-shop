@@ -75,8 +75,8 @@
                 <div class="tab-content">
                     <!-- Content list -->
                     <div class="tab-pane" id="listView">
-                        <?php if (isset($catProducts) && is_array($catProducts) && (!empty($catProducts))): ?>
-                            <?php foreach ($catProducts as $product): ?>
+                        <?php if (isset($categoryProducts) && is_array($categoryProducts) && (!empty($categoryProducts))): ?>
+                            <?php foreach ($categoryProducts as $product): ?>
                                 <div class="row">
                                     <div class="span2">
                                         <img class="product" src="<?php echo Product::getImage($product['id']); ?>" alt=""/>
@@ -121,8 +121,8 @@
                     <!-- Content block -->
                     <div class="tab-pane  active" id="blockView">
                         <ul class="thumbnails">
-                            <?php if (isset($catProducts) && is_array($catProducts) && (!empty($catProducts))): ?>
-                                <?php foreach ($catProducts as $product): ?>
+                            <?php if (isset($categoryProducts) && is_array($categoryProducts) && (!empty($categoryProducts))): ?>
+                                <?php foreach ($categoryProducts as $product): ?>
                                     <li class="span3">
                                         <div class="thumbnail">
                                             <a href="/product/<?php echo $product['id'];?>">
@@ -130,9 +130,6 @@
                                             </a>
                                             <div class="caption">
                                                 <h5><?php echo $product['name'];?></h5>
-                                                <p> 
-                                                    <?php echo $product['title']; ?>
-                                                </p>
                                                 <h4 style="text-align:center">
                                                     <a class="btn" href="/product/<?php echo $product['id'];?>"> 
                                                         <i class="icon-zoom-in"></i>

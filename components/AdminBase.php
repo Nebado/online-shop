@@ -1,29 +1,29 @@
 <?php
 
 /**
- * Abstract class AdminBase contains common logic for controller, which 
- * to use in Admin Panel
- */
+ * The abstract AdminBase class contains common logic for controllers that
+ * used in admin panel
+ */
 abstract class AdminBase
 {
     /**
-     * Method, which check user is has admin
-     * @return boolean
-     */
+     * A method that checks the user whether he is an administrator
+     * @return boolean
+     */
     public static function checkAdmin()
     {
-        // Check auth for user. If not, he will be redirect
+        // Check if the user is authorized. If not, it will be redirected
         $userId = User::checkLogged();
         
-        // Get information about current user
+        // Get information about the current user
         $user = User::getUserById($userId);
         
-        // If role of current user "admin", enter him in admin panel
+        // If the role of the current user is "admin", let him into the admin panel
         if ($user['role'] == 'admin') {
             return true;
         }
         
-        // Else exit work with message about access denied
+        // Otherwise, complete the work with the private access message
         die('Access denied');
     }
 }

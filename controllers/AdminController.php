@@ -1,21 +1,20 @@
 <?php
 
 /**
- * Controller AdminController
- * Home page in Admin Panel
- */
+ * AdminController Controller
+ * Home page in admin panel
+ */
 class AdminController extends AdminBase
 {
     /**
-     * Action for start page "Admin Panel"
-     * @return boolean
-     */
+     * Action for the admin panel start page
+     */
     public function actionIndex()
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin/index.php');
         return true;
     }

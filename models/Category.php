@@ -1,18 +1,27 @@
 <?php
 
+/**
+ * Category class - a model for working with product categories
+ */
 class Category
 {
-    
+    /**
+     * Adds a new category
+     * @param string $name <p>Name</p>
+     * @param integer $sortOrder <p>Sequence number</p>
+     * @param integer $status <p>Status <i> (on "1", off "0")</i> </p>
+     * @return boolean <p>The result of adding a record to the table</p>
+     */
     public static function createCategory($name, $sortOrder, $status)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Request string to DB
+        // DB request
         $sql = 'INSERT INTO category (name, sort_order, status) '
                 . 'VALUES (:name, :sort_order, :status)';
         
-        // Get and return results. To use prepare request
+        // Getting and returning results. Prepared Request Used
         $result = $db->prepare($sql);
         $result->bindParam(":name", $name, PDO::PARAM_STR);
         $result->bindParam(":sort_order", $sortOrder, PDO::PARAM_STR);
@@ -23,30 +32,51 @@ class Category
         return 0;
     }
     
+    /**
+     * Returns the category with the specified id
+     * @param integer $id <p>category id</p>
+     * @return array <p>An array with category information</p>
+     */
     public static function getCategoryById($id)
     {
-        if ($id) {
-            $db = Db::getConnection();
-            
-            $sql = "SELECT * FROM category WHERE id = :id";
-            $result = $db->prepare($sql);
-            $result->bindParam(":id", $id, PDO::PARAM_INT);
-            $result->execute();
-            
-            return $result->fetch();
-        }
+        // DB connection
+        $db = Db::getConnection();
+
+        // DB request
+        $sql = "SELECT * FROM category WHERE id = :id";
+        
+        // Prepared Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        
+        // Indicate that we want to get data in the form of an array
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        
+        // Execute the request
+        $result->execute();
+
+        // Return data
+        return $result->fetch();
     }
     
+    /**
+     * Editing a category with a given id
+     * @param integer $id <p> category id </p>
+     * @param string $name <p> Name </p>
+     * @param integer $sortOrder <p> Sequence number </p>
+     * @param integer $status <p> Status <i> (on "1", off "0") </i> </p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function updateCategoryById($id, $name, $sortOrder, $status)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Request string to DB
+        // DB request
         $sql = "UPDATE category SET name = :name, sort_order = :sortOrder, status = :status "
                 . "WHERE id = :id";
         
-        // Get and return results. To use prepare request
+        // Getting and returning results. Prepared Request Used
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
         $result->bindParam(":name", $name, PDO::PARAM_STR);
@@ -55,35 +85,43 @@ class Category
         return $result->execute();
     }
     
+    /**
+     * Removes a category with the given id
+     * @param integer $id
+     * @return boolean <p>Method execution result</p>
+     */
     public static function deleteCategoryById($id)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Request string from DB
+        // DB request
         $sql = 'DELETE FROM category WHERE id = :id';
         
-        // Get and return results. Use prepare request
+        // Getting and returning results. Prepared Request Used
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
         return $result->execute();
     }
     
+    /**
+     * Returns an array of categories for a list on a site
+     * @return array <p>An array with categories</p>
+     */
     public static function getCategoriesList()
     {
-        // Create empty array for categories list
-        $categoryList = array();
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Make request string
+        // DB request
         $sql = 'SELECT id, name FROM category '
                 . 'WHERE status="1" '
                 . 'ORDER BY sort_order ASC';
         $result = $db->query($sql);
         
-        // Get and return array
+        // Getting and returning results
         $i = 0;
+        $categoryList = array();
         while ($row = $result->fetch()) {
             $categoryList[$i]['id'] = $row['id'];
             $categoryList[$i]['name'] = $row['name'];
@@ -121,18 +159,22 @@ class Category
         return false;
     }
     
+    /**
+     * Returns an array of categories for a list in the admin panel <br/>
+     * (at the same time, on and off categories fall into the result)
+     * @return array <p>An array of categories</p>
+     */
     public static function getCategoriesListAdmin()
-    {
-        // Create empty array for categories list
-        $categoryList = array();
-        // Connect to DB
+    {        
+        // DB connection
         $db = Db::getConnection();
         
-        // Make request string
+        // DB request
         $sql = 'SELECT id, name, sort_order, status FROM category ORDER BY sort_order ASC';
         $result = $db->query($sql);
         
-        // Get and return array
+        // Getting and returning results
+        $categoryList = array();
         $i = 0;
         while ($row = $result->fetch()) {
             $categoryList[$i]['id'] = $row['id'];

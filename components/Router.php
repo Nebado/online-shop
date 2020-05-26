@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Redirect all requests in Controller and action
- */
+ * Class Router
+ * Routing component
+ */
 class Router {
     
     /**
-     * Contains array with routes
-     * @var array
-     */
+     * Property for storing an array of routes
+     * @var array
+     */
     private $routes;
     
     /**
-     * Get path of file with array of routes
-     * And include this file in private property $routes
+     * Constructor
      */
     public function __construct()
     {
@@ -22,8 +22,7 @@ class Router {
     }
     
     /**
-     * Returns request string
-     * @return string
+     * Returns a request string
      */
     private function getURI()
     {
@@ -32,44 +31,48 @@ class Router {
         }
     }
     
+    /**
+     * Method for processing request
+     */
     public function run()
     {
-        // Get request string
+        // Get the request string
         $uri = $this->getURI();
         
-        // Dissameble array with routes
+        // Check for the presence of such a request in the array of routes (routes.php)
         foreach ($this->routes as $uriPattern => $path) {
             
             // Compare $uriPattern and $uri
             if (preg_match("~$uriPattern~", $uri)) {
                 
-                // Get internal route
+                // Get the internal path from the external according to the rule.
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
                 
-                // Get controller name, action name, parameters
+                // Define controller, action, parameters
                 $segments = explode('/', $internalRoute);
                 
-                // ControllerName
                 $controllerName = array_shift($segments).'Controller';
                 $controllerName = ucfirst($controllerName);
                 
-                // actionName
                 $actionName = 'action'.ucfirst(array_shift($segments));
                 
-                // Parameters
                 $parameters = $segments;
                 
-                // Connect file of controller
+                // Include a controller class file
                 $controllerFile = ROOT.'/controllers/'.$controllerName.'.php';
                 if (is_file($controllerFile)) {
                     require_once($controllerFile);
                 }
                 
-                // Create an object controller and method (action)
+                // Create an object, call a method (i.e. action)
                 $controllerObject = new $controllerName;
+                
+                /* Call the required method ($actionName) on a specific
+                 * class ($controllerObject) with the given ($parameters) parameters
+                 */
                 $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
                 
-                // Exit from foreach
+                // If the controller method is successfully called, shut down the router
                 if ($result != null) {
                     break;
                 }

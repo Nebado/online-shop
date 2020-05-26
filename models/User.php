@@ -1,35 +1,43 @@
 <?php
 
+/**
+ * Class User - a model for working with users
+ */
 class User
 {
     /**
-     * Add a new user
-     * @param type $firstName
-     * @param type $lastName
-     * @param type $email
-     * @param type $password
-     * @param type $birth
-     * @param type $company
-     * @param type $address
-     * @param type $city
-     * @param type $state
-     * @param type $postcode
-     * @param type $country
-     * @param type $info
-     * @param type $phone
-     * @return boolean, integer
+     * User registration
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $password
+     * @param string $birth
+     * @param string $company
+     * @param string $address
+     * @param string $city
+     * @param string $state
+     * @param integer $postcode
+     * @param string $country
+     * @param string $info
+     * @param string $phone
+     * @return boolean
      */
     public static function register($firstName, $lastName, $email, $password, $birth, $company, $address, $city, $state, $postcode, $country, $info, $phone)
     {
+        // Turn the array into a string
         $stateStr = json_encode($state);
         $countryStr = json_encode($country);
         
+        // DB connection
         $db = Db::getConnection();
-                
+        
+        // DB query text
         $sql = "INSERT INTO user (first_name, last_name, email, password, birth, company, "
                 . "address, city, state, postcode, country, additional_info, phone) "
                 . "VALUES (:firstName, :lastName, :email, :password, :birth, :company, "
                 . ":address, :city, :state, :postcode, :country, :info, :phone)";
+        
+        // Getting and returning results. Prepare Request Used.
         $result = $db->prepare($sql);
         $result->bindParam(":firstName", $firstName, PDO::PARAM_STR);
         $result->bindParam(":lastName", $lastName, PDO::PARAM_STR);
@@ -44,63 +52,68 @@ class User
         $result->bindParam(":country", $countryStr, PDO::PARAM_STR);
         $result->bindParam(":info", $info, PDO::PARAM_STR);
         $result->bindParam(":phone", $phone, PDO::PARAM_STR);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        
-        if ($result->execute()) {
-            return $id = $db->lastInsertId();
-        }
-        return true;
+        return $result->execute();
     }
     
     /**
-     * Login user
-     * @param type $email
-     * @param type $password
-     * @return boolean
-     */
-    public static function login($email, $password) {
+     * Check if the user exists with the given $email and $password
+     * @param string $email <p>E-mail</p>
+     * @param string $password <p>Password</p>
+     * @return mixed: integer user id or false
+     */
+    public static function checkUserData($email, $password)
+    {
+        // DB connection
         $db = Db::getConnection();
         
-        $sql = "SELECT id FROM user WHERE email = :email AND password = :password";
+        // DB query text
+        $sql = 'SELECT * FROM user WHERE email = :email AND password = :password';
+        
+        // Getting and returning results. Prepare Request Used.
         $result = $db->prepare($sql);
         $result->bindParam(":email", $email, PDO::PARAM_STR);
         $result->bindParam(":password", $password, PDO::PARAM_STR);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
         
-        if ($row = $result->fetch()) {
-            return $row['id'];
+        // Turn to the record
+        $user = $result->fetch();
+        
+        if ($user) {
+            // If the record exists, return user ID
+            return $user['id'];
         }
-        return true;
+        return false;
     }
     
     /**
-     * Remember user
-     * @param integer $userId
-     */
+     * Remember user
+     * @param integer $userId <p>user id</p>
+     */
     public static function auth($userId)
     {
-        // Write in user id in session
+        // write the user ID in the session
         $_SESSION['user'] = $userId;
     }
     
     /**
-     * Return user id, if he is auth
-     * else redirect to login page
-     * @return string
-     */
+     * Returns the user ID if authorized. <br/>
+     * Otherwise redirects to login page
+     * @return string <p>User ID</p>
+     */
     public static function checkLogged()
     {
+        // If there is a session, return the user ID
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
         }
-            header("Location: /login/");
+        
+        header("Location: /login");
     }
     
     /**
-     * Check user has a guest
-     * @return boolean
-     */
+     * Checks if the user is a guest
+     * @return boolean <p>Method execution result</p>
+     */
     public static function isGuest()
     {
         if (isset($_SESSION['user'])) {
@@ -110,10 +123,10 @@ class User
     }
     
     /**
-     * Check firstName at least 2 char
-     * @param type $firstName
-     * @return boolean
-     */
+     * Checks the first name: no less than 2 characters
+     * @param string $firstName <p>First Name</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function checkFirstName($firstName)
     {
         if (strlen($firstName) >= 2) {
@@ -123,10 +136,10 @@ class User
     }
     
      /**
-     * Check lastName at least 2 char
-     * @param type $lastName
-     * @return boolean
-     */
+     * Checks the last name: no less than 2 characters
+     * @param string $lastName <p>Last Name</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function checkLastName($lastName)
     {
         if (strlen($lastName) >= 2) {
@@ -136,10 +149,10 @@ class User
     }
     
     /**
-     * Check email for validation
-     * @param type $email
-     * @return boolean
-     */
+     * Checks email
+     * @param string $email <p>E-mail</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function checkEmail($email)
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -149,30 +162,33 @@ class User
     }
     
     /**
-     * Check email on exists
-     * @param type $email
-     * @return boolean
-     */
+     * Checks if another user is busy with email
+     * @param type $email <p>Email</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function checkEmailExists($email)
     {
+        // DB connection
         $db = Db::getConnection();
         
-        $sql = "SELECT id FROM user WHERE email = :email";
+        // DB query text
+        $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
+        
+        // Getting and returning results. Prepare Request Used.
         $result = $db->prepare($sql);
         $result->bindParam(":email", $email, PDO::PARAM_STR);
         $result->execute();
         
-        if ($result->fetch()) {
+        if ($result->fetchColumn())
             return true;
-        }
         return false;
     }
     
     /**
-     * Check password at least 6 char
-     * @param type $password
-     * @return boolean
-     */
+     * Checks the password: no less than 6 characters
+     * @param string $password <p>Password</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function checkPassword($password)
     {
         if (strlen($password) >= 6) {
@@ -182,10 +198,10 @@ class User
     }
     
     /**
-     * Check phone at least 10 char
-     * @param type $phone
-     * @return boolean
-     */
+     * Checks the phone: no less than 10 characters
+     * @param string $phone <p>Phone</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function checkPhone($phone)
     {
         if (strlen($phone) >= 10) {
@@ -195,29 +211,27 @@ class User
     }
     
     /**
-     * Return array with information about user
-     * @param integer $id
-     * @return array
-     */
+     * Returns the user with the specified id
+     * @param integer $id <p>user id</p>
+     * @return array <p>An array with user information</p>
+     */
     public static function getUserById($id)
     {
-        $id = intval($id);
-        
+        // DB connection        
         $db = Db::getConnection();
+        
+        // DB query text
         $sql = "SELECT * FROM user WHERE id = :id";
         
+        // Getting and returning results. Prepare Request Used.
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
+        
+        // Indicate, that want to get data in the form of an array
+        $result->setFetchMode(PDO::FETCH_ASSOC);
         $result->execute();
 
-        while ($row = $result->fetch()) {
-            $user['first_name'] = $row['first_name'];
-            $user['last_name'] = $row['last_name'];
-            $user['email'] = $row['email'];
-            $user['role'] = $row['role'];
-        }
-        
-        return $user;
+        return $result->fetch();
     }
 }
 

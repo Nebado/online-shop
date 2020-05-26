@@ -1,22 +1,30 @@
 <?php
 
+/**
+ * ProductController
+ * Product
+ */
 class ProductController
 {  
+    /**
+     * Action for product view page
+     * @param integer $productId <p> product id </p>
+     */
     public function actionView($productId)
     {
-        // Add categories list
+        // List of categories for the left menu
         $categories = Category::getCategoriesList();
         
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        // List of subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
         
-        // Returns product by id
+        // Get product info by id
         $product = Product::getProductById($productId);
         
         $totalPrice = Cart::getPrice();
         $totalQuantity = Cart::countItems();
         
+        // Connect the view
         require_once(ROOT . '/views/product/view.php');
         return true;
     }

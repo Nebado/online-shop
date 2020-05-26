@@ -1,155 +1,181 @@
 <?php
 
+/**
+ * CartController controller
+ * Cart
+ */
 class CartController {
 
+    /**
+     * Action for the Cart page
+     */
     public function actionIndex() {
-        // Add categories list
+        
+        // List of categories for the left menu
         $categories = Category::getCategoriesList();
 
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        // List of subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
 
-        $productsInCart = false;
-
-        // Get data from cart
+        // Get the identifiers and the number of products in the cart
         $productsInCart = Cart::getProducts();
 
         if ($productsInCart) {
+            // If there are products in the cart, get full information about the products for the list
+            // Get an array with product identifiers only
             $productsIds = array_keys($productsInCart);
+            
+            // Get an array with full information about the necessary products.
             $products = Product::getProductsByIds($productsIds);
             
+            // Get the total price of products
             $totalPrice = Cart::getTotalPrice($products);
         }
         
-        $totalPrice = false;
         $totalQuantity = Cart::countItems();
 
+        // Connect the view
         require_once(ROOT . '/views/cart/index.php');
         return true;
     }
 
     /**
-     * Sync request
-     * @param type $id
-     * @return boolean
-     */
+     * Action to add a product to the cart with a synchronous request <br/>
+     * (for example, not used)
+     * @param integer $ id <p> product id </p>
+     */
     public function actionAdd($id) {
-        // Add product in cart
+        // Add product to cart
         Cart::addProduct($id);
 
+        // Return the user to the page from which he came
         $referrer = $_SERVER['HTTP_REFERER'];
         header("Location: $referrer");
-
-        return true;
-    }
-    
-    public function actionDelete($id)
-    {
-        Cart::deleteOneProduct($id);
-        header("Location: /cart/");
-    }
-    
-    public function actionDeleteProduct($id)
-    {
-        Cart::deleteProduct($id);
-        header("Location: /cart/");
     }
 
+    /**
+     * Action to add an item to the cart using an asynchronous request (ajax)
+     * @param integer $ id <p> product id </p>
+     */
     public function actionAddAjax($id) {
-        // Add a product in cart
+        // Add the product to the cart and print the result: the number of products in the cart
         echo Cart::addProduct($id);
         return true;
     }
-
-    public function actionCheckout() {
+    
+    /**
+     * Action to delete a product to the cart
+     * @param integer $ id <p> product id </p>
+     */
+    public function actionDelete($id)
+    {
+        // Delete the specified item from the cart
+        Cart::deleteOneProduct($id);
         
-        // Add categories list
+        // Return the user to the cart
+        header("Location: /cart/");
+    }
+    
+    /**
+     * Action to delete a product to the cart
+     * @param integer $ id <p> product id </p>
+     */
+    public function actionDeleteProduct($id)
+    {
+        // Delete the specified item from the cart
+        Cart::deleteProduct($id);
+        
+        // Return the user to the cart
+        header("Location: /cart/");
+    }
+
+    /**
+     * Action for the Checkout page
+     */
+    public function actionCheckout() 
+    {
+        // Get data from the cart
+        $productsInCart = Cart::getProducts();
+        
+        // If there are no products, we send users to search for products on the main page
+        if ($productsInCart == false) {
+            header("Location: /");
+        }
+        
+        // List of categories for the left menu
         $categories = Category::getCategoriesList();
 
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        // List of subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
         
+        // Find the total price
+        
+        $productsIds = array_keys($productsInCart);
+        $products = Product::getProductsByIds($productsIds);
+        $totalPrice = Cart::getTotalPrice($products);
+        
+        // Number of products
+        $totalQuantity = Cart::countItems();
+        
+        // Form Fields
+        $userName = false;
+        $userPhone = false;
+        $userComment = false;
+        
+        // Successful Checkout Status
         $result = false;
 
+        // Check if the user is a guest
+        if (!User::isGuest()) {
+            // If the user is not a guest
+            // Get user information from the database
+            $userId = User::checkLogged();
+            $user = User::getUserById($userId);
+            $userName = $user['name'];
+        } else {
+            // If guest, form fields will remain empty
+            $userId = false;
+        }
+        
+        // Form processing
         if (isset($_POST['submit'])) {
+            // If the form is submitted
+            // Get the form data from the form
             $userName = $_POST['userName'];
             $userPhone = $_POST['userPhone'];
             $userComment = $_POST['userComment'];
 
-            // Validate errors
+            // Flag of errors
             $errors = false;
+            
+            // Validation the fields
             if (!User::checkFirstName($userName))
                 $errors[] = 'Wrong name';
             if (!User::checkPhone($userPhone))
                 $errors[] = 'Wrong phone';
-
-            // Is form correct? - Yes
+            
+            
             if ($errors == false) {
-                $productsInCart = Cart::getProducts();
-                if (User::isGuest()) {
-                    $userId = false;
-                } else {
-                    $userId = User::checkLogged();
-                }
-
-                // Save order in DB
+                // If there are no errors
+                // Save the order in the database
                 $result = Order::save($userName, $userPhone, $userComment, $userId, $productsInCart);
 
                 if ($result) {
-                    // Notice admin abour new order
+                    // If the order is successfully saved
+                    // Notify the administrator about a new order by mail
                     $adminEmail = 'admin@php.com';
-                    $message = 'http://yourhost.com/admin/orders';
+                    $message = '<a href="http://yourhost.com/admin/orders">List of orders</a>';
                     $subject = 'New order';
                     mail($adminEmail, $subject, $message);
 
-                    // Clear cart
+                    // Clear the cart
                     Cart::clear();
-                }
-            } else {
-                // Is form correct? - No
-                // Total
-                $productsInCart = Cart::getProducts();
-                $productsIds = array_keys($productsInCart);
-                $products = Product::getProductsByIds($productsIds);
-                $totalPrice = Cart::getTotalPrice($products);
-                $totalQuantity = Cart::countItems();
-            }
-        } else {
-            // Form is not send
-
-            $productsInCart = Cart::getProducts();
-
-            if ($productsInCart == false) {
-                // Cart is empty
-
-                header("Location: /");
-            } else {
-                // Cart is not empty
-                // Total
-                $productsIds = array_keys($productsInCart);
-                $products = Product::getProductsByIds($productsIds);
-                $totalPrice = Cart::getTotalPrice($products);
-                $totalQuantity = Cart::countItems();
-
-                $userName = false;
-                $userPhone = false;
-                $userComment = false;
-
-                if (User::isGuest()) {
-                    // No
-                } else {
-                    $userId = User::checkLogged();
-                    $user = User::getUserById($userId);
-
-                    $userName = $user['first_name'];
                 }
             }
         }
 
+        // Connect the view
         require_once(ROOT . '/views/cart/checkout.php');
-
         return true;
     }
 

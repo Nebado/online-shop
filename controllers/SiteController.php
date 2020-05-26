@@ -1,30 +1,75 @@
 <?php
 
+/**
+ * SiteController controller
+ */
 class SiteController
 {
-    
+    /**
+     * Action for the main page
+     */
     public function actionIndex()
     {
-        // Add categories list
+        // List of the categories for the left menu
         $categories = Category::getCategoriesList();
         
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        // List of the subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
         
-        // Return array with latest products
-        $latestProducts = Product::getLatestProductsList();
+        // List of the latest products
+        $latestProducts = Product::getLatestProducts();
         
-        // Return array with featured products
-        $featuredProducts = Product::getFeaturedProductsList();
+        // List of the featured products
+        $sliderProducts = Product::getFeaturedProducts();
         // Count items in Featured Products
-        $count = Product::getCountItemsInFeaturedProducts();
+        $totalFeaturedProducts = Product::getTotalProductsInFeaturedProducts();
         
         $totalPrice = Cart::getPrice();
         $totalQuantity = Cart::countItems();
 
-        // Connect view
+        // Connect the view
         require_once(ROOT . '/views/site/index.php');
-        return true; 
+        return true;
+    }
+    
+    /**
+     * Action for the Contact page
+     */
+    public function actionContact()
+    {
+        // Variables for the form
+        $userEmail = false;
+        $userText = false;
+        $result = false;
+        
+        // Form processing
+        if (isset($_POST['submit'])) {
+            // If the form is submitted
+            // Get the form data from the form
+            $userEmail = $_POST['email'];
+            $userText = $_POST['message'];
+            
+            // Flag of errors
+            $errors = false;
+        
+            // Validation the fields
+            if (!User::checkEmail($userEmail)) {
+                $errors[] = 'Wrong email';
+            }
+            
+            if ($errors == false) {
+                // If there are no errors
+                // Send a mail to the admin
+                $adminEmail = 'admin@gmail.com';
+                $message = "Text: {$userText}. From {$userEmail}";
+                $subject = "Subject: ";
+                $result = mail($adminEmail, $subject, $message);
+                $result = true;
+            }
+        }
+        
+        // Connect the view
+        require_once(ROOT . '/views/site/contact.php');
+        return true;
     }
 }

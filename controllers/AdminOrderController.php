@@ -1,38 +1,42 @@
 <?php
 
 /**
- * Controller AdminOrderController
- * Manage orders in Admin Panel
- */
+ * AdminOrderController controller
+ * Management of orders in the admin panel
+ */
 class AdminOrderController extends AdminBase
 {
     /**
-     * Action for page "Manage orders"
-     */
+     * Action for the Order Management page
+     */
     public function actionIndex()
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Get list of orders
+        // Get a list of orders
         $ordersList = Order::getOrdersList();
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin_order/index.php');
         return true;
     }
     
     public function actionView($id)
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
         // Get information about order
         $order = Order::getOrderById($id);
         
+        // Get information about products in order by id
         $products = Product::getProductsListInOrder($id);
+        
+        // Get quantity in order
         $quantity = Order::getQuantityInOrder($id);
         
+        // Get total price in order
         $totalPrice = Cart::getTotalPriceInOrder($products, $quantity);
         
         // Connect to view
@@ -40,20 +44,24 @@ class AdminOrderController extends AdminBase
         return true;
     }
     
+    /**
+     * Action for the Order Edit page
+     */
     public function actionUpdate($id)
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Get information about order
+        // Get data on a specific order
         $order = Order::getOrderById($id);
         
+        // Get products on a specific order
         $products = Product::getProductsListInOrder($id);
         
-        // Processing Form
+        // Form processing
         if (isset($_POST['submit'])) {
-            // If form is send
-            // Get data from form
+            // If form is submitted
+            // Get the data from the form
             $options['userName'] = $_POST['userName'];
             $options['userPhone'] = $_POST['userPhone'];
             $options['userComment'] = $_POST['userComment'];
@@ -63,31 +71,31 @@ class AdminOrderController extends AdminBase
             // Save changes
             Order::updateOrderById($id, $options);
             
-            // Redirect user on page manage products
+            // Redirect the user to the order management page
             header("Location: /admin/order");
         }
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin_order/update.php');
         return true;
     }
     
     public function actionDelete($id)
     {
-        // Check access
+        // Access check
         self::checkAdmin();
         
-        // Processing Form
+        // Form processing
         if (isset($_POST['submit'])) {
-            // If form is send
-            // Delete product
+            // If form is submitted
+            // Delete the order
             Order::deleteOrderById($id);
             
-            // Redirect user on page manage of products
+            // Redirect the user to the order management page
             header("Location: /admin/order");
         }
         
-        // Connect to view
+        // Connect the view
         require_once(ROOT . '/views/admin_order/delete.php');
         return true;
     }

@@ -30,6 +30,8 @@
 
 <script src="/template/themes/js/bootshop.js"></script>
 <script src="/template/themes/js/jquery.lightbox-0.5.js"></script>
+<script src="/template/themes/js/jquery.cycle2.js"></script>
+<script src="/template/themes/js/jquery.cycle2.carousel.js"></script>
 <script>
     $(document).ready(function(){
         $(".add-to-cart").click(function () {

@@ -1,29 +1,38 @@
 <?php
 
+/**
+ * UserController controller
+ */
 class UserController
 {
     
+    /**
+     * Action for the Registration page
+     */
     public function actionRegister()
     {
-        // Add categories list
+        $totalPrice = Cart::getPrice();
+        $totalQuantity = Cart::countItems();
+        
+        // List of the categories for the left menu
         $categories = Category::getCategoriesList();
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        
+        // List of the subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
         
-        // Registration
-        $firstName = '';
-        $lastName = '';
-        $email = '';
-        $password = '';
-        $birth = '';
-        $company = '';
-        $address = '';
-        $city = '';
-        $state = '';
-        $postcode = '';
-        $country = '';
-        $phone = '';
+        // Variables for the form
+        $firstName = false;
+        $lastName = false;
+        $email = false;
+        $password = false;
+        $birth = false;
+        $company = false;
+        $address = false;
+        $city = false;
+        $state = false;
+        $postcode = false;
+        $country = false;
+        $phone = false;
         
         $result = false;
         
@@ -42,9 +51,10 @@ class UserController
             $info       = $_POST['info'];
             $phone      = $_POST['phone'];
         
-            // Validate errors
-            $errors = [];
+            // Flag of errors
+            $errors = false;
 
+            // Validation the fields
             if (!User::checkFirstName($firstName)) {
                 $errors[] = 'First name must be at least 2 characters';
             }
@@ -65,45 +75,48 @@ class UserController
             }
             
             if ($errors == false) {
-                // Receive user id when he is registered
-                $userId = User::register($firstName, $lastName, $email,
+                // If there are no errors
+                // Registrate a new user
+                $result = User::register($firstName, $lastName, $email,
                         $password, $birth, $company, $address, $city, 
                         $state, $postcode, $country, $info, $phone);
-
-                if ($userId) {
-                    User::auth($userId);
-                }
-                $result = true;
             }            
         }
         
-        require_once(ROOT . '/views/register/register.php');
+        // Connect the view
+        require_once(ROOT . '/views/user/register.php');
         return true;
     }
     
+    /**
+     * Action for the Login page
+     */
     public function actionLogin()
     {
         $totalPrice = Cart::getPrice();
         $totalQuantity = Cart::countItems();
-        // Add categories list
+        
+        // List of the categories for the left menu
         $categories = Category::getCategoriesList();
         
-        /* --- 001 Problem --- */
-        /* --- I don't receive id subcategory within Category --- */
+        // List of the subcategories for the left menu
         $subCategories = Category::getSubCategoriesList(1);
         
-        // Login
-        $email = '';
-        $password = '';
+        // Variables for form
+        $email = false;
+        $password = false;
         $result = false;
         
         if (isset($_POST['submit'])) {
+            // If there are no errors
+            // Get the form data from the form
             $email = $_POST['email'];
             $password = $_POST['password'];
             
-            $errors = [];
+            // Flag of errors
+            $errors = false;
             
-            // Validate errors
+            // Validation fields
             if (!User::checkEmail($email)) {
                 $errors[] = 'Email is wrong';
             }
@@ -112,25 +125,37 @@ class UserController
                 $errors[] = 'Password must be at least 6 characters';
             }
             
-            if ($errors == false) {
-                $userId = User::login($email, $password);
-                if ($userId) {
-                    User::auth($userId);
-                    header("Location: /");
-                }
+            // Check if user exists
+            $userId = User::checkUserData($email, $password);
+            
+            if ($userId == false) {
+                // If the data is incorrect - show the error
+                $errors[] = 'Incorrect login details';
+            } else {
+                // If the data is correct, remember the user (session)
+                User::auth($userId);
+                
+                // We redirect the user to the closed part - home page
+                header("Location: /");
             }
         }        
         
-        require_once(ROOT . '/views/login/login.php');
+        require_once(ROOT . '/views/user/login.php');
         return true;
     }
     
+    /**
+     * Delete user data from the session
+     */
     public function actionLogout()
     {
-        if ($_SESSION['user']) {
-            unset($_SESSION['user']);
-            header("Location: /");
-        }
-        return true;
+        // Start the session
+        session_start();
+        
+        // Delete user information from the session
+        unset($_SESSION['user']);
+        
+        // Redirect the user to the main page
+        header("Location: /");
     }
 }

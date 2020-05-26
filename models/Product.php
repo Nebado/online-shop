@@ -1,61 +1,117 @@
 <?php
 
+ /**
+  * Product class - model for working with products
+  */
 class Product
 {
+    // Number of items displayed by default
     const SHOW_BY_DEFAULT = 6;
     
     /**
-     * Returns an array with latest products
-     * @type array
-     */
-    public static function getLatestProductsList()
+     * Returns an array of latest items
+     * @Param type $count [optional] <p>Number</ p>
+     * @param type $page [optional] <p>Current page number</p>
+     * @return array <p>Array of products</p>
+     */
+    public static function getLatestProducts($count = self::SHOW_BY_DEFAULT)
     {
+        // DB connection
         $db = Db::getConnection();
-        $products = array();
         
-        $query = 'SELECT id, name, title, price, image, is_new FROM product '
-                . 'WHERE status="1" '
-                . 'ORDER BY id DESC '
-                . 'LIMIT '.self::SHOW_BY_DEFAULT;
+        // DB query text
+        $sql = 'SELECT id, name, price, is_new FROM product '
+                . 'WHERE status="1" ORDER BY id DESC '
+                . 'LIMIT :count';
         
-        $result = $db->query($query);
+        // Prepare Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(':count', $count, PDO::PARAM_INT);
         
+        // Indicate that we want to get data in the form of an array
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        
+        // Command execution
+        $result->execute();
+        
+        // Getting and returning results
         $i = 0;
+        $productsList = array();
         while ($row = $result->fetch()) {
-            $products[$i]['id'] = $row['id'];
-            $products[$i]['name'] = $row['name'];
-            $products[$i]['title'] = $row['title'];
-            $products[$i]['price'] = $row['price'];
-            $products[$i]['image'] = $row['image'];
-            $products[$i]['is_new'] = $row['is_new'];
+            $productsList[$i]['id'] = $row['id'];
+            $productsList[$i]['name'] = $row['name'];
+            $productsList[$i]['price'] = $row['price'];
+            $productsList[$i]['is_new'] = $row['is_new'];
             $i++;
         }
-        return $products;
+        return $productsList;
     }
     
     /**
      * Returns an array with featured products
      * @type array
      */
-    public static function getFeaturedProductsList()
+    public static function getFeaturedProducts()
     {
+        // DB connection
         $db = Db::getConnection();
-        $products = array();
         
-        $query = 'SELECT id, name, title, price, image, is_new FROM product '
+        // DB query text
+        $sql = 'SELECT id, name, price, is_new FROM product '
                 . 'WHERE status="1" AND is_featured="1" '
-                . 'ORDER BY id DESC '
-                . 'LIMIT '. 4;
+                . 'ORDER BY id DESC';
         
-        $result = $db->query($query);
+        $result = $db->query($sql);
         
+        // Getting and returning results
         $i = 0;
+        $productsList = array();
+        while ($row = $result->fetch()) {
+            $productsList[$i]['id'] = $row['id'];
+            $productsList[$i]['name'] = $row['name'];
+            $productsList[$i]['price'] = $row['price'];
+            $productsList[$i]['is_new'] = $row['is_new'];
+            $i++;
+        }
+        return $productsList;
+    }
+    
+    /**
+     * Returns a list of products in the specified category
+     * @param type $categoryId <p>category id</p>
+     * @param type $page [optional] <p>Page Number</p>
+     * @return type <p>Array of goods</p>
+     */
+    public static function getProductsListByCategory($categoryId, $page = 1)
+    {
+        $limit = Product::SHOW_BY_DEFAULT;
+        // Offset(for request)
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+        
+        // DB connection
+        $db = Db::getConnection();
+        
+        // DB query text
+        $sql = "SELECT id, name, price, is_new FROM product "
+                . "WHERE status = '1' AND category_id = :category_id "
+                . "ORDER BY id ASC LIMIT :limit OFFSET :offset";
+        
+        // Prepare Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+        
+        // Command execution
+        $result->execute();
+
+        // Getting and returning results
+        $i = 0;
+        $products = array();
         while ($row = $result->fetch()) {
             $products[$i]['id'] = $row['id'];
             $products[$i]['name'] = $row['name'];
-            $products[$i]['title'] = $row['title'];
             $products[$i]['price'] = $row['price'];
-            $products[$i]['image'] = $row['image'];
             $products[$i]['is_new'] = $row['is_new'];
             $i++;
         }
@@ -63,214 +119,184 @@ class Product
     }
     
     /**
-     * Returns an array with products in current category
-     * @type array
-     */
-    public static function getProductsListInCategory($count = self::SHOW_BY_DEFAULT, $categoryId, $page = 1)
-    {
-        $categoryId = intval($categoryId);
-        $page = intval($page);
-        $offset = ($page - 1) * $count;
-        
-        if ($categoryId) {
-            $db = Db::getConnection();
-            
-            $products = array();
-            
-            $sql = "SELECT id, name, code, price, title, category_id, sub_category_id,"
-                    . "availability, is_featured, description, is_new, image FROM product "
-                    . "WHERE status='1' AND category_id=:categoryId "
-                    . "ORDER BY id DESC "
-                    . "LIMIT ".$count
-                    . " OFFSET ".$offset;
-            $result = $db->prepare($sql);
-            $result->bindParam(":categoryId", $categoryId, PDO::PARAM_INT);
-            $result->execute();
-            
-            $i = 0;
-            while ($row = $result->fetch()) {
-                $products[$i]['id'] = $row['id'];
-                $products[$i]['name'] = $row['name'];
-                $products[$i]['code'] = $row['code'];
-                $products[$i]['price'] = $row['price'];
-                $products[$i]['title'] = $row['title'];
-                $products[$i]['description'] = $row['description'];
-                $products[$i]['category_id'] = $row['category_id'];
-                $products[$i]['sub_category_id'] = $row['sub_category_id'];
-                $products[$i]['availability'] = $row['availability'];
-                $products[$i]['is_featured'] = $row['is_featured'];
-                $products[$i]['is_new'] = $row['is_new'];
-                $products[$i]['image'] = $row['image'];
-                $i++;
-            }
-            
-            return $products;
-        }
-    }
-    
-    /**
      * Returns an array with products in current subcategory
      * @type array
      */
-    public static function getProductsListInSubCategory($categoryId, $subCategoryId, $page = 1)
+    public static function getProductsListBySubCategory($categoryId, $subCategoryId, $page = 1)
     {   
-        $subCategoryId = intval($subCategoryId);
-        $page = intval($page);
+        $limit = Product::SHOW_BY_DEFAULT;
+        // Offset(for request)
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
         
-        if ($subCategoryId) {
-            
-            $db = Db::getConnection();
-            $products = array();
-            
-            $sql = "SELECT id, name, code, price, title, category_id, sub_category_id,"
-                    . "availability, is_featured, description, is_new, image FROM product "
-                    . "WHERE status='1' AND category_id=:categoryId AND sub_category_id=:subCategoryId "
-                    . "ORDER BY id DESC "
-                    . "LIMIT ".self::SHOW_BY_DEFAULT
-                    . " OFFSET ".$offset;
-            
-            $result = $db->prepare($sql);
-            $result->bindParam(":categoryId", $categoryId, PDO::PARAM_INT);
-            $result->bindParam(":subCategoryId", $subCategoryId, PDO::PARAM_INT);
-            $result->execute();
-            
-            $i = 0;
-            while ($row = $result->fetch()) {
-                $products[$i]['id'] = $row['id'];
-                $products[$i]['name'] = $row['name'];
-                $products[$i]['code'] = $row['code'];
-                $products[$i]['price'] = $row['price'];
-                $products[$i]['title'] = $row['title'];
-                $products[$i]['description'] = $row['description'];
-                $products[$i]['category_id'] = $row['category_id'];
-                $products[$i]['sub_category_id'] = $row['sub_category_id'];
-                $products[$i]['availability'] = $row['availability'];
-                $products[$i]['is_featured'] = $row['is_featured'];
-                $products[$i]['is_new'] = $row['is_new'];
-                $products[$i]['image'] = $row['image'];
-                $i++;
-            }
-            
-            return $products;
+        // DB connection
+        $db = Db::getConnection();
+        
+        // DB query text
+        $sql = "SELECT id, name, price, is_new FROM product "
+                . "WHERE status='1' AND category_id = :category_id AND sub_category_id = :sub_category_id "
+                . "ORDER BY id ASC LIMIT :limit OFFSET :offset";
+
+        // Prepare Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
+        $result->bindParam(':sub_category_id', $subCategoryId, PDO::PARAM_INT);
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+        
+        // Command execution
+        $result->execute();
+
+        // Getting and returning results
+        $i = 0;
+        $products = array();
+        while ($row = $result->fetch()) {
+            $products[$i]['id'] = $row['id'];
+            $products[$i]['name'] = $row['name'];
+            $products[$i]['price'] = $row['price'];
+            $products[$i]['is_new'] = $row['is_new'];
+            $i++;
         }
-    }
-    
-    public static function getProductById($productId)
-    {
-        if ($productId) {
-            $db = Db::getConnection();
-            
-            $sql = "SELECT * FROM product WHERE id = :productId";
-            $result = $db->prepare($sql);
-            $result->bindParam(":productId", $productId, PDO::PARAM_INT);
-            $result->execute();
-            
-            return $result->fetch();
-        }
+        return $products;
     }
     
     /**
-     * Returns count of items in category
-     * @param type $categoryId
-     * @return type integer
-     */
-    public static function getCountItemsInCategory($categoryId)
+     * Returns the product with the specified id
+     * @param integer $id <p>product id</p>
+     * @return array <p>Array with product information</p>
+     */
+    public static function getProductById($id)
     {
-        if ($categoryId) {
-            $db = Db::getConnection();
-            
-            $sql = "SELECT COUNT(id) count FROM product "
-                    . "WHERE status='1' AND category_id = :categoryId ";
-            
-            $result = $db->prepare($sql);
-            $result->bindParam(":categoryId", $categoryId, PDO::PARAM_INT);
-            $result->execute();
-            
-            if ($row = $result->fetch()) {
-                return $row['count'];
-            }
-        }
+        // DB connection
+        $db = Db::getConnection();
+        
+        // DB query text
+        $sql = "SELECT * FROM product WHERE id = :id";
+        
+        // Prepare Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        
+        // Command execution
+        $result->execute();
+        
+        // Getting and returning results
+        return $result->fetch();
     }
     
     /**
-     * Returns count of items in subcategory
-     * @param type $subCategoryId
-     * @return type integer
-     */
-    public static function getCountItemsInSubCategory($subCategoryId)
+     * Return the number of products in the specified category
+     * @param integer $ categoryId
+     * @return integer
+     */
+    public static function getTotalProductsInCategory($categoryId)
     {
-        if ($subCategoryId) {
-            $db = Db::getConnection();
-            
-            $sql = "SELECT COUNT(id) count FROM product "
-                    . "WHERE status='1' AND sub_category_id = :subCategoryId ";
-            
-            $result = $db->prepare($sql);
-            $result->bindParam(":subCategoryId", $subCategoryId, PDO::PARAM_INT);
-            $result->execute();
-            
-            if ($row = $result->fetch()) {
-                return $row['count'];
-            }
-        }
+        // DB connection
+        $db = Db::getConnection();
+
+        // DB request text
+        $sql = 'SELECT count(id) AS count FROM product WHERE status="1" AND category_id = :category_id';
+
+        // Prepare Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":category_id", $categoryId, PDO::PARAM_INT);
+        
+        // Command execution
+        $result->execute();
+
+        // Return value count - quantity
+        $row = $result->fetch();
+        return $row['count'];
+    }
+    
+    /**
+     * Return the number of products in the specified subcategory
+     * @param integer $ subcategoryId
+     * @return integer
+     */
+    public static function getTotalProductsInSubCategory($subcategoryId)
+    {
+        // DB connection
+        $db = Db::getConnection();
+
+        // DB request text
+        $sql = 'SELECT count(id) AS count FROM product WHERE status="1" AND sub_category_id = :sub_category_id';
+
+        // Prepare Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":sub_category_id", $subcategoryId, PDO::PARAM_INT);
+        
+        // Command execution
+        $result->execute();
+
+        // Return value count - quantity
+        $row = $result->fetch();
+        return $row['count'];
     }
     
     /**
      * Returns count of items in featured products
      * @return type integer
      */
-    public static function getCountItemsInFeaturedProducts()
+    public static function getTotalProductsInFeaturedProducts()
     {
+        // DB connection
         $db = Db::getConnection();
 
-        $sql = "SELECT COUNT(id) count FROM product "
-                . "WHERE status='1' AND is_featured='1'";
+        // DB query text
+        $sql = 'SELECT count(id) AS count FROM product WHERE status="1" AND is_featured="1"';
 
+        // Query execution
         $result = $db->query($sql);
 
-        if ($row = $result->fetch()) {
-            return $row['count'];
-        }
+        // Return value count - quantity
+        $row = $result->fetch();
+        return $row['count'];
     }
     
+    /**
+     * Returns a list of products with the specified identifiers
+     * @param array $idsArray <p>An array with identifiers</p>
+     * @return array <p>Array with a list of products</p>
+     */
     public static function getProductsByIds($idsArray)
     {
-        $products = array();
-        
+        // DB connection
         $db = Db::getConnection();
         
+        // Turn the array into a string to form a condition in the request
         $idsString = implode(',', $idsArray);
         
+        // DB query text
         $sql = "SELECT * FROM product WHERE status = '1' AND id IN ($idsString)";
         
         $result = $db->query($sql);
+        
+        // Indicate, that we want to get data in the form of an array
         $result->setFetchMode(PDO::FETCH_ASSOC);
         
+        // Getting and returning resultss
         $i = 0;
+        $products = array();
         while($row = $result->fetch()) {
             $products[$i]['id'] = $row['id'];
             $products[$i]['name'] = $row['name'];
             $products[$i]['code'] = $row['code'];
             $products[$i]['price'] = $row['price'];
-            $products[$i]['title'] = $row['title'];
-            $products[$i]['image'] = $row['image'];
             $i++;
         }
-        
         return $products;
     }
     
     /**
-     * Return list of products
-     * @return array of products
-     */
+     * Returns a list of products
+     * @return array <p>Array of products</p>
+     */
     public static function getProductsList()
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Get and return results
+        // Getting and returning results
         $result = $db->query('SELECT id, name, price, code FROM product ORDER BY id ASC');
         $productsList = array();
         $i = 0;
@@ -285,30 +311,35 @@ class Product
     }
     
     /**
-     * Delete product by id
-     * @param integer $id
-     * @return boolen
-     */
+     * Deletes a product with the specified id
+     * @param integer $id <p>product id</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function deleteProductById($id)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Request string from DB
+        // DB query text
         $sql = 'DELETE FROM product WHERE id = :id';
         
-        // Get and return results. Use prepare request
+        // Getting and returning results. Prepare Request Used
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
         return $result->execute();
     }
     
+    /**
+     * Adds a new product
+     * @param array $options <p>Array with product information</p>
+     * @return integer <p>id added to the record table</p>
+     */
     public static function createProduct($options)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Request string to DB
+        // DB query text
         $sql = 'INSERT INTO product '
                 . '(name, code, price, category_id, sub_category_id, brand, availability, '
                 . 'description, is_new, is_featured, status) '
@@ -316,7 +347,7 @@ class Product
                 . '(:name, :code, :price, :category_id, :subcategory_id, :brand, :availability,'
                 . ':description, :is_new, :is_featured, :status)';
         
-        // Get and return results. To use prepare request
+        // Getting and returnring results. Prepare Request Used
         $result = $db->prepare($sql);
         $result->bindParam(":name", $options['name'], PDO::PARAM_STR);
         $result->bindParam(":code", $options['code'], PDO::PARAM_STR);
@@ -330,17 +361,25 @@ class Product
         $result->bindParam(":is_featured", $options['is_featured'], PDO::PARAM_INT);
         $result->bindParam(":status", $options['status'], PDO::PARAM_INT);
         if ($result->execute()) {
+            // If the request is completed successfully, return the id of the added record
             return $db->lastInsertId();
         }
+        // Otherwise return 0
         return 0;
     }
     
+    /**
+     * Edits a product with a given id
+     * @param integer $id <p>product id</p>
+     * @param array $options <p>Array with product information</p>
+     * @return boolean <p>Method execution result</p>
+     */
     public static function updateProductById($id, $options)
     {
-        // Connect to DB
+        // DB connection
         $db = Db::getConnection();
         
-        // Request string to DB
+        // DB query text
         $sql = "UPDATE product
             SET
                 name            = :name,
@@ -356,7 +395,7 @@ class Product
                 status          = :status
             WHERE id = :id";
         
-        // Get and return results. To use prepare request
+        // Getting and returning results. Prepare Request Used
         $result = $db->prepare($sql);
         $result->bindParam(":id", $id, PDO::PARAM_INT);
         $result->bindParam(":name", $options['name'], PDO::PARAM_STR);
@@ -373,6 +412,29 @@ class Product
         return $result->execute();
     }
     
+    /**
+     * Returns a text explanation of the availability of products: <br/>
+     * <i>0 - On order, 1 - In stock</i>
+     * @param integer $availability <p>Status</p>
+     * @return string <p>Text explanation</p>
+     */
+    public static function getAvailabilityText($availability)
+    {
+        switch ($availability) {
+            case '1':
+                return 'In Stock';
+                break;
+            case '0':
+                return 'Under the order';
+                break;
+        }
+    }
+    
+    /**
+     * Returns 
+     * @param type $id
+     * @return type
+     */
     public static function getProductsListInOrder($id)
     {
         // Get information about order
@@ -392,19 +454,29 @@ class Product
         return $products;
     }
     
+    /**
+     * Returns image path
+     * @param integer $id
+     * @return string <p>Image Path</p>
+     */
     public static function getImage($id)
     {
+        // Dummy Image Name
         $noImage = 'no-image.jpg';
         
+        // The path to the product folder
         $path = '/upload/images/products/';
         
-        // Path to image of product
+        // The path to the product image
         $pathToProductImage = $path . $id . '.jpg';
         
         if (file_exists($_SERVER['DOCUMENT_ROOT'].$pathToProductImage)) {
+            // If image for product exists
+            // Return the product image path
             return $pathToProductImage;
         }
         
+        // Return the dummy image path
         return $path . $noImage;
     }
 }
