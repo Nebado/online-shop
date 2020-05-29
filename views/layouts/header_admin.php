@@ -18,6 +18,7 @@
         <!-- Bootstrap style --> 
         <link id="callCss" rel="stylesheet" href="/template/themes/shop/bootstrap.min.css" media="screen"/>
         <link href="/template/themes/css/base.css" rel="stylesheet" media="screen"/>
+        <link href="/template/themes/css/admin_dropdown.css" rel="stylesheet" media="screen"/>
         <!-- Bootstrap style responsive -->	
         <link href="/template/themes/css/bootstrap-responsive.min.css" rel="stylesheet"/>
         <link href="/template/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
