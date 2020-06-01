@@ -1,4 +1,4 @@
-//Bootsshop-----------------------//
+//Rootsshop-----------------------//
 $(document).ready(function(){
 	/* carousel of home page animation */
 	$('#myCarousel').carousel({
@@ -10,9 +10,17 @@ $(document).ready(function(){
 	$(function() {
 		$('#gallery a').lightBox();
 	});
-	
+        
+        var li = $('.subMenu > a').parents('li');
+        
+        if(!li.hasClass('open')) {
+            var subMenus = $('#sidebar li.subMenu ul');
+            subMenus.fadeOut(250);
+        }
+                
 	$('.subMenu > a').click(function(e)
 	{
+                
 		e.preventDefault();
 		var subMenu = $(this).siblings('ul');
 		var li = $(this).parents('li');

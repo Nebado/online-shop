@@ -130,35 +130,61 @@ class Category
         return $categoryList;
     }
     
-    public static function getSubCategoriesList($category_id = false)
+    public static function getSubCategoriesList($category_id)
     {
-        $category_id = intval($category_id);
+        $status = 1;
+        // Create empty array for categories list
+        $subCategoryList = array();
+        // Connect to DB
+        $db = Db::getConnection();
 
-        if ($category_id) {
-            // Create empty array for categories list
-            $subCategoryList = array();
-            // Connect to DB
-            $db = Db::getConnection();
-            
-            // Make request string
-            $sql = 'SELECT id, name, category_id FROM sub_category '
-                    . 'WHERE status="1" AND category_id="'.$category_id.'"'
-                    . 'ORDER BY sort_order ASC';
-            $result = $db->query($sql);
-            
-            // Get and return array
-            $i = 0;
-            while ($row = $result->fetch()) {
-                $subCategoryList[$i]['id'] = $row['id'];
-                $subCategoryList[$i]['name'] = $row['name'];
-                $subCategoryList[$i]['category_id'] = $row['category_id'];
-                $i++;
-            }
-            return $subCategoryList;
+        // Make request string
+        $sql = 'SELECT id, name, category_id FROM sub_category'
+                . ' WHERE status=:status AND category_id=:category_id'
+                . ' ORDER BY sort_order ASC';
+        
+        // Getting and returning results. Prepared Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":status", $status, PDO::PARAM_INT);
+        $result->bindParam(":category_id", $category_id, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+
+        // Get and return array
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $subCategoryList[$i]['id'] = $row['id'];
+            $subCategoryList[$i]['name'] = $row['name'];
+            $subCategoryList[$i]['category_id'] = $row['category_id'];
+            $i++;
+        }
+        
+        return $subCategoryList;
+    }
+    
+    public static function getSubCategoryName($category_id, $id)
+    {
+        $status = 1;
+        // Connect to DB
+        $db = Db::getConnection();
+
+        // Make request string
+        $sql = 'SELECT name FROM sub_category'
+                . ' WHERE status=:status AND category_id=:category_id AND id=:id' 
+                . ' ORDER BY sort_order ASC';
+        $result = $db->prepare($sql);
+        $result->bindParam(":status", $status, PDO::PARAM_INT);
+        $result->bindParam(":category_id", $category_id, PDO::PARAM_INT);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $result->execute();
+
+        // Get and return array
+        if ($row = $result->fetch()) {
+            return $name = $row['name'];
         }
         return false;
     }
-    
     /**
      * Returns an array of categories for a list in the admin panel <br/>
      * (at the same time, on and off categories fall into the result)

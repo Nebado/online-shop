@@ -40,7 +40,7 @@ class CatalogController
         $categories = Category::getCategoriesList();
         
         // List of subcategories for the left menu
-        $subCategories = Category::getSubCategoriesList(1);
+        $subCategories = Category::getSubCategoriesList($categoryId);
         
         // List of products in the subcategory
         $subCategoryProducts = Product::getProductsListBySubCategory($categoryId, $subCategoryId, $page);

@@ -18,25 +18,23 @@
                 </div>
                 <ul id="sideManu" class="nav nav-tabs nav-stacked">
                     <?php foreach ($categories as $category): ?>
-                        <li class="<?php if ($category['id'] == 1) echo 'subMenu open'; ?>">
-                            <a href="/catalog/category-<?php echo $category['id'];?>">
+                        <li class="subMenu<?php if ($category['id'] == $categoryId) echo 'open';?>">
+                            <a href="#">
                                 <?php echo $category['name']; ?>
                             </a>
-                            <?php if ($category['id'] == 1): ?>
-                                <ul>
-                                    <li><a href="/catalog/category-<?php echo $category['id'];?>">All</a></li>
-                                    <?php if (isset($subCategories) && is_array($subCategories)): ?>
-                                        <?php foreach ($subCategories as $subCategory): ?>
-                                            <li>
-                                                <a href="/catalog/category-<?php echo $category['id']."-".$subCategory['id'];?>">
-                                                    <i class="icon-chevron-right"></i>
-                                                        <?php echo $subCategory['name']; ?> 
-                                                </a>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </ul>
-                            <?php endif; ?>
+                            <ul>
+                                <li><a href="/catalog/category-<?php echo $category['id'];?>">All</a></li>
+                                <?php if (!empty(Category::getSubCategoriesList($category['id'])) && is_array(Category::getSubCategoriesList($category['id']))): ?>
+                                    <?php foreach (Category::getSubCategoriesList($category['id']) as $subCategory): ?>
+                                        <li>
+                                            <a href="/catalog/category-<?php echo $category['id']."-".$subCategory['id'];?>">
+                                                <i class="icon-chevron-right"></i>
+                                                    <?php echo $subCategory['name']; ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </ul>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -45,10 +43,12 @@
             <!-- Sidebar end -->
             <div class="span9">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+                    <li><a href="/">Home</a> <span class="divider">/</span></li>
                     <li class="active">Products Name</li>
                 </ul>
-                <h3> <?php echo $subCategories[$subCategoryId-1]['name']; ?> <small class="pull-right"> 40 products are available </small></h3>	
+                <h3><?php echo Category::getSubCategoryName($categoryId, $subCategoryId); ?>
+                    <small class="pull-right"> 40 products are available </small>
+                </h3>	
                 <hr class="soft"/>
                 <p>
                     Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country.

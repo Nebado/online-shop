@@ -79,7 +79,7 @@
                             <?php if (isset($errors) && (is_array($errors))): ?>
                                 <?php foreach ($errors as $error): ?>
                                     <ul>
-                                        <li> - <?php echo $error; ?></li>
+                                        <li style="color: red;"> - <?php echo $error; ?></li>
                                     </ul>
                                 <?php endforeach; ?>
                             <?php endif; ?>
