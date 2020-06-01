@@ -20,6 +20,9 @@ return array(
     'register' => 'user/register', // actionRegister in UserController
     'login' => 'user/login', // actionLogin in UserController
     'logout' => 'user/logout', // actionLogout in UserController
+    // Cabinet
+    'cabinet/edit' => 'cabinet/edit', // actionEdit in CabinetController
+    'cabinet' => 'cabinet/index', // actionIndex in CabinetController
     // Manage products
     'admin/product/create' => 'adminProduct/create',
     'admin/product/update/([0-9]+)' => 'adminProduct/update/$1',
@@ -44,6 +47,8 @@ return array(
     'admin' => 'admin/index',
     // About us
     'contact' => 'site/contact', // actionIndex in SiteController
+    // Soon
+    'soon' => 'site/soon', // actionSoon in SiteController
     // Home page
     'index.php' => 'site/index', // actionIndex in SiteController
     '' => 'site/index' // actionIndex in SiteController

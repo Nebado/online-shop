@@ -10,6 +10,12 @@ class SiteController
      */
     public function actionIndex()
     {
+        // Get username by id
+        $userId = User::checkLogged();
+        if ($userId == true) {
+            $user = User::getUserById($userId);
+            $userName = $user['first_name'];
+        }
         // List of the categories for the left menu
         $categories = Category::getCategoriesList();
         
@@ -70,6 +76,14 @@ class SiteController
         
         // Connect the view
         require_once(ROOT . '/views/site/contact.php');
+        return true;
+    }
+    
+    public function actionSoon()
+    {
+        
+        // Connect the view
+        require_once(ROOT . '/views/site/soon.php');
         return true;
     }
 }

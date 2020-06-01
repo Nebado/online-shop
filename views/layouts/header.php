@@ -35,7 +35,7 @@
         <div id="header">
             <div class="container">
                 <div id="welcomeLine" class="row">
-                    <div class="span6">Welcome!<strong> User</strong></div>
+                    <div class="span6">Welcome!<strong> <?php if (isset($userName)) echo $userName; else echo 'user'; ?></strong></div>
                     <div class="span6">
                         <div class="pull-right">
                             <a href="#"><span class="">Fr</span></a>

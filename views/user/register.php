@@ -152,14 +152,7 @@
                             <div class="control-group">
                                 <label class="control-label" for="state">State<sup>*</sup></label>
                                 <div class="controls">
-                                    <select id="state" name="state[]">
-                                        <option value="">-</option>
-                                        <option value="1">Alabama</option>
-                                        <option value="2">Alaska</option>
-                                        <option value="3">Arizona</option>
-                                        <option value="4">Arkansas</option>
-                                        <option value="5">California</option>
-                                    </select>
+                                    <input type="text" name="state" id="state" value="<?php echo $state;?>" placeholder="State"/>
                                 </div>
                             </div>	
                             <div class="control-group">
@@ -172,10 +165,7 @@
                             <div class="control-group">
                                 <label class="control-label" for="country">Country<sup>*</sup></label>
                                 <div class="controls">
-                                    <select id="country" name="country[]">
-                                        <option value="">-</option>
-                                        <option value="1">Country</option>
-                                    </select>
+                                    <input type="text" name="country" id="country" value="<?php echo $country;?>" placeholder="Country"/>
                                 </div>
                             </div>	
                             <div class="control-group">

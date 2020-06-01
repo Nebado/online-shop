@@ -34,7 +34,7 @@
                         <td><?php echo $product['name'];?></td>
                         <td><?php echo $product['price'];?></td>
                         <td><a href="/admin/product/update/<?php echo $product['id'];?>" title="Edit">Edit</a></td>
-                        <td><a href="/admin/product/delete/<?php echo $product['id'];?>" title="Edit">Delete</a></td>
+                        <td><a href="/admin/product/delete/<?php echo $product['id'];?>" title="Delete">Delete</a></td>
                     </tr>
                 <?php endforeach; ?>
             </table>

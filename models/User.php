@@ -23,11 +23,7 @@ class User
      * @return boolean
      */
     public static function register($firstName, $lastName, $email, $password, $birth, $company, $address, $city, $state, $postcode, $country, $info, $phone)
-    {
-        // Turn the array into a string
-        $stateStr = json_encode($state);
-        $countryStr = json_encode($country);
-        
+    {       
         // DB connection
         $db = Db::getConnection();
         
@@ -47,9 +43,66 @@ class User
         $result->bindParam(":company", $company, PDO::PARAM_STR);
         $result->bindParam(":address", $address, PDO::PARAM_STR);
         $result->bindParam(":city", $city, PDO::PARAM_STR);
-        $result->bindParam(":state", $stateStr, PDO::PARAM_STR);
+        $result->bindParam(":state", $state, PDO::PARAM_STR);
         $result->bindParam(":postcode", $postcode, PDO::PARAM_INT);
-        $result->bindParam(":country", $countryStr, PDO::PARAM_STR);
+        $result->bindParam(":country", $country, PDO::PARAM_STR);
+        $result->bindParam(":info", $info, PDO::PARAM_STR);
+        $result->bindParam(":phone", $phone, PDO::PARAM_STR);
+        return $result->execute();
+    }
+    
+    /**
+     * User update
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $password
+     * @param string $birth
+     * @param string $company
+     * @param string $address
+     * @param string $city
+     * @param string $state
+     * @param integer $postcode
+     * @param string $country
+     * @param string $info
+     * @param string $phone
+     * @return boolean
+     */
+    public static function update($id, $firstName, $lastName, $email, $password, $birth, $company, $address, $city, $state, $postcode, $country, $info, $phone)
+    {        
+        // DB connection
+        $db = Db::getConnection();
+        
+        // DB query text
+        $sql = 'UPDATE user SET 
+                first_name      = :firstName,
+                last_name       = :lastName,
+                email           = :email,
+                password        = :password,
+                birth           = :birth,
+                company         = :company,
+                address         = :address,
+                city            = :city,
+                state           = :state,
+                postcode        = :postcode,
+                country         = :country,
+                additional_info = :info,
+                phone = :phone WHERE id = :id';
+        
+        // Getting and returning results. Prepare Request Used.
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        $result->bindParam(":firstName", $firstName, PDO::PARAM_STR);
+        $result->bindParam(":lastName", $lastName, PDO::PARAM_STR);
+        $result->bindParam(":email", $email, PDO::PARAM_STR);
+        $result->bindParam(":password", $password, PDO::PARAM_STR);
+        $result->bindParam(":birth", $birth, PDO::PARAM_STR);
+        $result->bindParam(":company", $company, PDO::PARAM_STR);
+        $result->bindParam(":address", $address, PDO::PARAM_STR);
+        $result->bindParam(":city", $city, PDO::PARAM_STR);
+        $result->bindParam(":state", $state, PDO::PARAM_STR);
+        $result->bindParam(":postcode", $postcode, PDO::PARAM_INT);
+        $result->bindParam(":country", $country, PDO::PARAM_STR);
         $result->bindParam(":info", $info, PDO::PARAM_STR);
         $result->bindParam(":phone", $phone, PDO::PARAM_STR);
         return $result->execute();
