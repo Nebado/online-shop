@@ -9,11 +9,11 @@
                 <ol class="breadcrumb">
                     <li><a href="/admin">Admin Panel</a></li>
                     <li><a href="/admin/category">Manage Categories</a></li>
-                    <li class="active">Create Category</li>
+                    <li class="active">Create SubCategory</li>
                 </ol>
             </div>
 
-            <h4>Add new Category</h4>
+            <h4>Add new SubCategory</h4>
 
             <br/>
             <?php if(isset($errors) && (is_array($errors))): ?>
@@ -28,6 +28,12 @@
                     <label class="control-label" for="name">Name <sup>*</sup></label>
                     <div class="controls">
                         <input type="text" name="name" id="name" value="" placeholder="Name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="categoryId">Category ID: <sup>*</sup></label>
+                    <div class="controls">
+                        <input type="text" name="categoryId" id="name" value="" placeholder="Category ID">
                     </div>
                 </div>
                 <div class="control-group">

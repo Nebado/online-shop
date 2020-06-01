@@ -50,8 +50,8 @@
                                             <td><?php echo $subcategory['category_id'];?></td>
                                             <td><?php echo $subcategory['sort_order'];?></td>
                                             <td><?php echo $subcategory['status'];?></td>
-                                            <td><a href="/admin/subcategory/update/<?php echo $subcategory['id'];?>" title="Edit">Edit</a></td>
-                                            <td><a href="/admin/subcategory/delete/<?php echo $subcategory['id'];?>" title="Delete">Delete</a></td>
+                                            <td><a href="/admin/category/update/<?php echo $subcategory['id'];?>" title="Edit">Edit</a></td>
+                                            <td><a href="/admin/category/delete/<?php echo $subcategory['id'];?>" title="Delete">Delete</a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>

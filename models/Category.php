@@ -33,6 +33,35 @@ class Category
     }
     
     /**
+     * Adds a new subcategory
+     * @param string $name <p>Name</p>
+     * @param string $categoryId <p>categoryId</p>
+     * @param integer $sortOrder <p>Sequence number</p>
+     * @param integer $status <p>Status <i> (on "1", off "0")</i> </p>
+     * @return boolean <p>The result of adding a record to the table</p>
+     */
+    public static function createSubCategory($name, $sortOrder, $categoryId, $status)
+    {
+        // DB connection
+        $db = Db::getConnection();
+        
+        // DB request
+        $sql = 'INSERT INTO sub_category (name, sort_order, category_id, status) '
+                . 'VALUES (:name, :sort_order, :category_id, :status)';
+        
+        // Getting and returning results. Prepared Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":name", $name, PDO::PARAM_STR);
+        $result->bindParam(":sort_order", $sortOrder, PDO::PARAM_INT);
+        $result->bindParam(":category_id", $categoryId, PDO::PARAM_INT);
+        $result->bindParam(":status", $status, PDO::PARAM_INT);
+        if ($result->execute()) {
+            return $db->lastInsertId();
+        }
+        return 0;
+    }
+    
+    /**
      * Returns the category with the specified id
      * @param integer $id <p>category id</p>
      * @return array <p>An array with category information</p>
@@ -44,6 +73,33 @@ class Category
 
         // DB request
         $sql = "SELECT * FROM category WHERE id = :id";
+        
+        // Prepared Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        
+        // Indicate that we want to get data in the form of an array
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        
+        // Execute the request
+        $result->execute();
+
+        // Return data
+        return $result->fetch();
+    }
+    
+    /**
+     * Returns the category with the specified id
+     * @param integer $id <p>category id</p>
+     * @return array <p>An array with category information</p>
+     */
+    public static function getSubCategoryById($id)
+    {
+        // DB connection
+        $db = Db::getConnection();
+
+        // DB request
+        $sql = "SELECT * FROM sub_category WHERE id = :id";
         
         // Prepared Request Used
         $result = $db->prepare($sql);
@@ -86,6 +142,33 @@ class Category
     }
     
     /**
+     * Editing a category with a given id
+     * @param integer $id <p> category id </p>
+     * @param string $name <p> Name </p>
+     * @param integer $sortOrder <p> Sequence number </p>
+     * @param integer $status <p> Status <i> (on "1", off "0") </i> </p>
+     * @return boolean <p>Method execution result</p>
+     */
+    public static function updateSubCategoryById($id, $name, $sortOrder, $categoryId, $status)
+    {
+        // DB connection
+        $db = Db::getConnection();
+        
+        // DB request
+        $sql = "UPDATE sub_category SET name = :name, sort_order = :sortOrder, category_id = :category_id,"
+                . " status = :status WHERE id = :id";
+        
+        // Getting and returning results. Prepared Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        $result->bindParam(":name", $name, PDO::PARAM_STR);
+        $result->bindParam(":sortOrder", $sortOrder, PDO::PARAM_INT);
+        $result->bindParam(":category_id", $categoryId, PDO::PARAM_INT);
+        $result->bindParam(":status", $status, PDO::PARAM_INT);
+        return $result->execute();
+    }
+    
+    /**
      * Removes a category with the given id
      * @param integer $id
      * @return boolean <p>Method execution result</p>
@@ -97,6 +180,25 @@ class Category
         
         // DB request
         $sql = 'DELETE FROM category WHERE id = :id';
+        
+        // Getting and returning results. Prepared Request Used
+        $result = $db->prepare($sql);
+        $result->bindParam(":id", $id, PDO::PARAM_INT);
+        return $result->execute();
+    }
+    
+    /**
+     * Removes a subcategory with the given id
+     * @param integer $id
+     * @return boolean <p>Method execution result</p>
+     */
+    public static function deleteSubCategoryById($id)
+    {
+        // DB connection
+        $db = Db::getConnection();
+        
+        // DB request
+        $sql = 'DELETE FROM sub_category WHERE id = :id';
         
         // Getting and returning results. Prepared Request Used
         $result = $db->prepare($sql);
