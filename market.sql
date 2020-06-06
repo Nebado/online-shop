@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 25 2020 г., 15:46
+-- Время создания: Июн 06 2020 г., 21:30
 -- Версия сервера: 5.7.28
 -- Версия PHP: 5.6.40
 
@@ -47,7 +47,7 @@ INSERT INTO `category` (`id`, `name`, `sort_order`, `status`) VALUES
 (3, 'FOODS AND BEVERAGES', 1, 1),
 (4, 'HEALTH & BEAUTY\r\n', 1, 1),
 (5, 'SPORTS & LEISURE', 1, 1),
-(6, 'BOOKS & ENTERTAINMENTS2', 1, 1);
+(6, 'BOOKS & ENTERTAINMENTS', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ INSERT INTO `product` (`id`, `name`, `code`, `brand`, `price`, `title`, `descrip
 (19, 'Lumix TI3', '115543', 'Lumix', 5000, NULL, 'Company Lumix', 1, 3, 1, 1, 1, NULL, 1),
 (20, 'Rosa Ki 10', '237415', 'Rosa ', 4300, NULL, 'Company Rosa', 1, 3, 1, 1, 1, NULL, 1),
 (21, 'Sand T14', '3424', 'Sand ', 3002, NULL, 'Company Sand', 1, 3, 1, 1, 1, NULL, 1),
-(22, 'Yeti R7', '2384', 'Yeti ', 2000, NULL, 'Company Yeti', 1, 4, 1, 1, 1, NULL, 1);
+(22, 'Yeti R7', '2384', 'Yeti ', 2000, NULL, 'Company Yeti', 1, 1, 1, 1, 1, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -142,17 +142,17 @@ CREATE TABLE IF NOT EXISTS `sub_category` (
   `category_id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `sub_category`
 --
 
 INSERT INTO `sub_category` (`id`, `name`, `sort_order`, `category_id`, `status`) VALUES
-(1, 'Mobile Phone', 1, 1, 1),
+(1, 'Mobile Phones', 1, 1, 1),
 (2, 'Computers, Tablets & Laptop', 1, 1, 1),
 (3, 'Cameras', 1, 1, 1),
-(4, 'Sound & Vision', 1, 1, 1),
+(4, 'Sound & Visions', 1, 1, 1),
 (5, 'Women\'s Clothing', 1, 2, 1),
 (6, 'Women\'s Shoes', 1, 2, 1),
 (7, 'Women\'s Hand Bags', 1, 2, 1),
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password`, `birth`, `company`, `address`, `city`, `state`, `postcode`, `country`, `additional_info`, `phone`, `date`, `status`, `role`) VALUES
-(1, 'rosy', 'last', 'rosy@gma.co', '123456', '', 'Rosy', 'street 222', 'New York', 'Alsa', 2858285, 'USA', 'Addon', '322222355235', '2020-05-14 09:05:42', 1, 'admin'),
+(1, 'Rosy', 'Rocket', 'rosy@gmail.com', '123456', '2000-01-08', 'Rosy inc.', 'street 23', 'New York', 'Arizona', 2858285, 'USA', 'Additional information', '3777777777773', '2020-05-14 09:05:42', 1, 'admin'),
 (2, 'Rop', 'Loco', 'loco@mga.com', '123456', '2008-01-12', 'Cop', 'street 282', 'San Diego', '[\"5\"]', 18385, '[\"1\"]', 'Additional information', '123456789123', '2020-05-14 12:38:02', 1, NULL),
 (3, 'Test', 'Test', 'test@gmail.com', '123456', '2011-11-11', 'Test', 'test', 'Test', '[\"1\"]', 1341516, '[\"1\"]', 'test', '12345678912', '2020-05-14 14:49:46', 1, NULL),
 (4, 'Rony', 'Locky', 'rony@gma.com', '123456', '2012-12-12', 'Rony', 'street 211', 'New York', '[\"1\"]', 1315151, '[\"1\"]', 'TEST', '123456789121', '2020-05-14 14:51:56', 1, NULL);
