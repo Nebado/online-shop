@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    
+
     // Product
     'product/([0-9]+)' => 'product/view/$1', // actionView in ProductController
     // Catalog
