@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <button type="submit" name="submit" class="btn">Sign in</button> <a href="forgetpass.html">Forget password?</a>
+                                        <button type="submit" name="submit" class="btn">Sign in</button> <a href="/forgetpass">Forget password?</a>
                                     </div>
                                 </div>
                             </form>

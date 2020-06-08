@@ -20,6 +20,8 @@ return array(
     'register' => 'user/register', // actionRegister in UserController
     'login' => 'user/login', // actionLogin in UserController
     'logout' => 'user/logout', // actionLogout in UserController
+    // Forget Password
+    'forgetpass' => 'user/reset', // actionReset in UserController
     // Cabinet
     'cabinet/edit' => 'cabinet/edit', // actionEdit in CabinetController
     'cabinet' => 'cabinet/index', // actionIndex in CabinetController

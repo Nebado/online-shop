@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Class User - a model for working with users
- */
+    * Class User - a model for working with users
+    */
 class User
 {
     /**
@@ -29,9 +29,9 @@ class User
         
         // DB query text
         $sql = "INSERT INTO user (first_name, last_name, email, password, birth, company, "
-                . "address, city, state, postcode, country, additional_info, phone) "
-                . "VALUES (:firstName, :lastName, :email, :password, :birth, :company, "
-                . ":address, :city, :state, :postcode, :country, :info, :phone)";
+             . "address, city, state, postcode, country, additional_info, phone) "
+             . "VALUES (:firstName, :lastName, :email, :password, :birth, :company, "
+             . ":address, :city, :state, :postcode, :country, :info, :phone)";
         
         // Getting and returning results. Prepare Request Used.
         $result = $db->prepare($sql);
@@ -109,11 +109,11 @@ class User
     }
     
     /**
-     * Check if the user exists with the given $email and $password
-     * @param string $email <p>E-mail</p>
-     * @param string $password <p>Password</p>
-     * @return mixed: integer user id or false
-     */
+            * Check if the user exists with the given $email and $password
+            * @param string $email <p>E-mail</p>
+            * @param string $password <p>Password</p>
+            * @return mixed: integer user id or false
+            */
     public static function checkUserData($email, $password)
     {
         // DB connection
@@ -139,9 +139,9 @@ class User
     }
     
     /**
-     * Remember user
-     * @param integer $userId <p>user id</p>
-     */
+            * Remember user
+            * @param integer $userId <p>user id</p>
+            */
     public static function auth($userId)
     {
         // write the user ID in the session
@@ -149,10 +149,10 @@ class User
     }
     
     /**
-     * Returns the user ID if authorized. <br/>
-     * Otherwise redirects to login page
-     * @return string <p>User ID</p>
-     */
+            * Returns the user ID if authorized. <br/>
+            * Otherwise redirects to login page
+            * @return string <p>User ID</p>
+            */
     public static function checkLogged()
     {
         // If there is a session, return the user ID
@@ -164,9 +164,9 @@ class User
     }
     
     /**
-     * Checks if the user is a guest
-     * @return boolean <p>Method execution result</p>
-     */
+            * Checks if the user is a guest
+            * @return boolean <p>Method execution result</p>
+            */
     public static function isGuest()
     {
         if (isset($_SESSION['user'])) {
@@ -176,10 +176,10 @@ class User
     }
     
     /**
-     * Checks the first name: no less than 2 characters
-     * @param string $firstName <p>First Name</p>
-     * @return boolean <p>Method execution result</p>
-     */
+            * Checks the first name: no less than 2 characters
+            * @param string $firstName <p>First Name</p>
+            * @return boolean <p>Method execution result</p>
+            */
     public static function checkFirstName($firstName)
     {
         if (strlen($firstName) >= 2) {
@@ -188,11 +188,11 @@ class User
         return false;
     }
     
-     /**
-     * Checks the last name: no less than 2 characters
-     * @param string $lastName <p>Last Name</p>
-     * @return boolean <p>Method execution result</p>
-     */
+    /**
+            * Checks the last name: no less than 2 characters
+            * @param string $lastName <p>Last Name</p>
+            * @return boolean <p>Method execution result</p>
+            */
     public static function checkLastName($lastName)
     {
         if (strlen($lastName) >= 2) {
@@ -202,10 +202,10 @@ class User
     }
     
     /**
-     * Checks email
-     * @param string $email <p>E-mail</p>
-     * @return boolean <p>Method execution result</p>
-     */
+            * Checks email
+            * @param string $email <p>E-mail</p>
+            * @return boolean <p>Method execution result</p>
+            */
     public static function checkEmail($email)
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -215,10 +215,10 @@ class User
     }
     
     /**
-     * Checks if another user is busy with email
-     * @param type $email <p>Email</p>
-     * @return boolean <p>Method execution result</p>
-     */
+            * Checks if another user is busy with email
+            * @param type $email <p>Email</p>
+            * @return boolean <p>Method execution result</p>
+            */
     public static function checkEmailExists($email)
     {
         // DB connection
@@ -238,10 +238,10 @@ class User
     }
     
     /**
-     * Checks the password: no less than 6 characters
-     * @param string $password <p>Password</p>
-     * @return boolean <p>Method execution result</p>
-     */
+            * Checks the password: no less than 6 characters
+            * @param string $password <p>Password</p>
+            * @return boolean <p>Method execution result</p>
+            */
     public static function checkPassword($password)
     {
         if (strlen($password) >= 6) {
@@ -251,10 +251,10 @@ class User
     }
     
     /**
-     * Checks the phone: no less than 10 characters
-     * @param string $phone <p>Phone</p>
-     * @return boolean <p>Method execution result</p>
-     */
+            * Checks the phone: no less than 10 characters
+            * @param string $phone <p>Phone</p>
+            * @return boolean <p>Method execution result</p>
+            */
     public static function checkPhone($phone)
     {
         if (strlen($phone) >= 10) {
@@ -264,10 +264,10 @@ class User
     }
     
     /**
-     * Returns the user with the specified id
-     * @param integer $id <p>user id</p>
-     * @return array <p>An array with user information</p>
-     */
+            * Returns the user with the specified id
+            * @param integer $id <p>user id</p>
+            * @return array <p>An array with user information</p>
+            */
     public static function getUserById($id)
     {
         // DB connection        
@@ -285,6 +285,32 @@ class User
         $result->execute();
 
         return $result->fetch();
+    }
+
+    /**
+            * Returns the new password
+            * @param string $email <p>email</p>
+            * @return string <p>New password</p>
+            */
+    public static function resetPassword($email)
+    {
+        // DB connection        
+        $db = Db::getConnection();
+
+        // New password
+        $password = rand(123456, 987654);
+        
+        // DB query text
+        $sql = "UPDATE user SET password = :password WHERE email = :email";
+        
+        // Getting and returning results. Prepare Request Used.
+        $result = $db->prepare($sql);
+        $result->bindParam(":email", $email, PDO::PARAM_STR);
+        $result->bindParam(":password", $password, PDO::PARAM_INT);
+        
+        if ($result->execute()) {
+            return $password;
+        }
     }
 }
 
