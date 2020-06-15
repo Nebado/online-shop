@@ -10,12 +10,6 @@ class SiteController
      */
     public function actionIndex()
     {
-        // Get username by id
-        if (isset($_SESSION['user'])) {
-            $userId = $_SESSION['user'];
-            $user = User::getUserById($userId);
-            $userName = $user['first_name'];
-        }
         // List of the categories for the left menu
         $categories = Category::getCategoriesList();
 

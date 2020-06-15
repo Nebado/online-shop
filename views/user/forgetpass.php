@@ -1,11 +1,12 @@
 <?php include ROOT . '/views/layouts/header.php' ?>
 
+<!-- Main -->
 <div id="mainBody">
 	<div class="container">
 	<div class="row">
 	    <div class="span12">
             <ul class="breadcrumb">
-		        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+		        <li><a href="/">Home</a> <span class="divider">/</span></li>
 		        <li class="active">Forget password?</li>
             </ul>
 	        <h3> FORGET YOUR PASSWORD?</h3>	
@@ -46,6 +47,6 @@
 </div>
 </div>
 </div>
-<!-- MainBody End ============================= -->
+<!-- MainBody End -->
 
 <?php include ROOT . '/views/layouts/footer.php' ?>

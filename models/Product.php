@@ -92,7 +92,7 @@ class Product
         $db = Db::getConnection();
         
         // DB query text
-        $sql = "SELECT id, name, price, is_new FROM product "
+        $sql = "SELECT id, name, price, is_new, availability, title FROM product "
                 . "WHERE status = '1' AND category_id = :category_id "
                 . "ORDER BY id ASC LIMIT :limit OFFSET :offset";
         
@@ -113,6 +113,8 @@ class Product
             $products[$i]['name'] = $row['name'];
             $products[$i]['price'] = $row['price'];
             $products[$i]['is_new'] = $row['is_new'];
+            $products[$i]['title'] = $row['title'];
+            $products[$i]['availability'] = $row['availability'];
             $i++;
         }
         return $products;

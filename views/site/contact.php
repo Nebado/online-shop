@@ -1,5 +1,6 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<!-- Main -->
 <div id="mainBody">
     <div class="container">
         <hr class="soften">
@@ -10,10 +11,10 @@
                 <h4>Contact Details</h4>
                 <p>	18 Fresno,<br/> CA 93727, USA
                     <br/><br/>
-                    info@bootsshop.com<br/>
+                    info@rootsshop.com<br/>
                     ﻿Tel 123-456-6780<br/>
                     Fax 123-456-5679<br/>
-                    web:bootsshop.com
+                    web:rootsshop.com
                 </p>		
             </div>
 
@@ -66,7 +67,7 @@
         </div>
     </div>
 </div>
-<!-- MainBody End ============================= -->
+<!-- MainBody End -->
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>
 

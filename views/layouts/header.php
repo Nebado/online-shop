@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -13,7 +13,7 @@
              <link rel="stylesheet/less" type="text/css" href="/template/themes/less/amelia.less">  MOVE DOWN TO activate
         -->
         <!--<link rel="stylesheet/less" type="text/css" href="/template/themes/less/bootshop.less">
-        <script src="/template/themes/js/less.js" type="text/javascript"></script> -->
+             <script src="/template/themes/js/less.js" type="text/javascript"></script> -->
 
         <!-- Bootstrap style -->
         <link id="callCss" rel="stylesheet" href="/template/themes/shop/bootstrap.min.css" media="screen"/>
@@ -32,10 +32,11 @@
         <style type="text/css" id="enject"></style>
     </head>
     <body>
+        <!-- Header -->
         <div id="header">
             <div class="container">
                 <div id="welcomeLine" class="row">
-                    <div class="span6">Welcome!<strong> <?php if (isset($userName)) echo $userName; else echo 'user'; ?></strong></div>
+                    <div class="span6">Welcome!<strong> <?php echo User::getUserName(); ?></strong></div>
                     <div class="span6">
                         <div class="pull-right">
                             <a href="#"><span class="">Fr</span></a>
@@ -55,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Navbar ================================================== -->
+                <!-- Navbar -->
                 <div id="logoArea" class="navbar">
                     <a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
                         <span class="icon-bar"></span>
@@ -113,4 +114,4 @@
                 </div>
             </div>
         </div>
-        <!-- Header End====================================================================== -->
+        <!-- Header End -->

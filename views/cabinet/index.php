@@ -1,5 +1,6 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<!-- Main -->
 <div id="mainBody">
     <div class="container">
         <hr class="soften">
@@ -18,7 +19,7 @@
         </div>
     </div>
 </div>
-<!-- MainBody End ============================= -->
+<!-- MainBody End -->
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>
 

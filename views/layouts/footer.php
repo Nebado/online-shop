@@ -1,4 +1,4 @@
-<!-- Footer ================================================================== -->
+<!-- Footer -->
 <div  id="footerSection">
     <div class="container">
         <div class="row">
@@ -23,25 +23,15 @@
         <p class="pull-right" style="margin-top: 10px;">&copy; Online shop</p>
     </div><!-- Container End -->
 </div>
-<!-- Placed at the end of the document so the pages load faster ============================================= -->
+<!-- Placed at the end of the document so the pages load faster -->
 <script src="/template/themes/js/jquery.js" type="text/javascript"></script>
 <script src="/template/themes/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/template/themes/js/google-code-prettify/prettify.js"></script>
 
-<script src="/template/themes/js/rootshop.js"></script>
 <script src="/template/themes/js/jquery.lightbox-0.5.js"></script>
 <script src="/template/themes/js/jquery.cycle2.js"></script>
 <script src="/template/themes/js/jquery.cycle2.carousel.js"></script>
-<script>
-    $(document).ready(function(){
-        $(".add-to-cart").click(function () {
-            var id = $(this).attr("data-id");
-            $.post("/cart/addAjax/"+id, {}, function (data) {
-               $("#cart-count").html(data); 
-            });
-            return false;
-        });
-    });
-</script>
+<script src="/template/themes/js/rootshop.js"></script>
+<script src="/template/themes/js/cart.js"></script>
 </body>
 </html>

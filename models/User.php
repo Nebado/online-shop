@@ -170,9 +170,23 @@ class User
     public static function isGuest()
     {
         if (isset($_SESSION['user'])) {
-            return false;
+            return false;            
         }
         return true;
+    }
+
+    public static function getUserName()
+    {
+        // Get username by id
+        if (isset($_SESSION['user'])) {
+            $userId = $_SESSION['user'];
+            $user = self::getUserById($userId);
+            $userName = $user['first_name'];
+
+            return $userName;
+        }
+
+        return 'guest';
     }
     
     /**

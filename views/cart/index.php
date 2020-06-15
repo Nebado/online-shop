@@ -1,5 +1,6 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<!-- Main -->
 <div id="mainBody">
     <div class="container">
         <div class="row">
@@ -42,20 +43,6 @@
                 </ul>
                 <br/>
                 <div class="thumbnail">
-                    <img src="/template/themes/images/products/panasonic.jpg" alt="Bootshop panasonoc New camera"/>
-                    <div class="caption">
-                        <h5>Panasonic</h5>
-                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-                    </div>
-                </div><br/>
-                <div class="thumbnail">
-                    <img src="/template/themes/images/products/kindle.png" title="Bootshop New Kindel" alt="Bootshop Kindel">
-                    <div class="caption">
-                        <h5>Kindle</h5>
-                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-                    </div>
-                </div><br/>
-                <div class="thumbnail">
                     <img src="/template/themes/images/payment_methods.png" title="Bootshop Payment Methods" alt="Payments Methods">
                     <div class="caption">
                         <h5>Payment Methods</h5>
@@ -63,9 +50,10 @@
                 </div>
             </div>
             <!-- Sidebar end -->
+            
             <div class="span9">
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+                    <li><a href="/">Home</a> <span class="divider">/</span></li>
                     <li class="active"> SHOPPING CART</li>
                 </ul>
                 <h3>  SHOPPING CART [ <small><?php echo Cart::countItems();?> Item(s) </small>]<a href="/catalog/category-1/" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a></h3>	
@@ -94,7 +82,7 @@
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <a href="forgetpass.html" style="text-decoration:underline">Forgot password ?</a>
+                                        <a href="/forgetpass" style="text-decoration:underline">Forgot password ?</a>
                                     </div>
                                 </div>
                             </form>
@@ -156,6 +144,6 @@
         </div>
     </div>
 </div>
-<!-- MainBody End ============================= -->
+<!-- MainBody End -->
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

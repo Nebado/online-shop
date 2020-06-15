@@ -1,9 +1,10 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<!-- Main -->
 <div id="mainBody">
     <div class="container">
         <div class="row">
-            <!-- Sidebar ================================================== -->
+            <!-- Sidebar -->
             <div id="sidebar" class="span3">
                 <div class="well well-small">
                     <a id="myCart" href="/cart/">
@@ -40,7 +41,7 @@
                 </ul>
                 <br/>
             </div>
-            <!-- Sidebar end=============================================== -->
+            <!-- Sidebar end -->
             <div class="span9">
                 <ul class="breadcrumb">
                     <li><a href="index.html">Home</a> <span class="divider">/</span></li>
@@ -161,5 +162,5 @@
         </div>
     </div>
 </div>
-<!-- MainBody end ============================= -->
+<!-- MainBody end -->
 <?php include ROOT . '/views/layouts/footer.php'; ?>

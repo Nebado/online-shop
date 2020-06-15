@@ -1,5 +1,6 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<!-- Main -->
 <div id="mainBody">
     <div class="container">
         <div class="row">
@@ -161,5 +162,5 @@
         </div>
     </div>
 </div>
-<!-- MainBody end ============================= -->
+<!-- MainBody end -->
 <?php include ROOT . '/views/layouts/footer.php'; ?>

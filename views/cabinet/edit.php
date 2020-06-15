@@ -1,16 +1,12 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<!-- Main -->
 <div id="mainBody">
     <div class="container">
         <div class="row">
-            <!-- Sidebar -->
-            
-            <!-- Sidebar End -->
             <div class="span12">
-                
                 <h3> Edit Personal Information</h3>
                 <hr class="soft"/>
-
                 <div class="row">
                     <div class="span9">
                         <div class="well">
@@ -143,6 +139,6 @@
         </div>
     </div>
 </div>
-<!-- MainBody End ============================= -->
+<!-- MainBody End -->
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>
