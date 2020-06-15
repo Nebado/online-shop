@@ -50,7 +50,7 @@ class UserController
             $country    = $_POST['country'];
             $info       = $_POST['info'];
             $phone      = $_POST['phone'];
-        
+            
             // Flag of errors
             $errors = false;
 
@@ -78,8 +78,8 @@ class UserController
                 // If there are no errors
                 // Registrate a new user
                 $result = User::register($firstName, $lastName, $email,
-                        $password, $birth, $company, $address, $city, 
-                        $state, $postcode, $country, $info, $phone);
+                                         $password, $birth, $company, $address, $city, 
+                                         $state, $postcode, $country, $info, $phone);
             }            
         }
         
@@ -145,8 +145,8 @@ class UserController
     }
     
     /**
-     * Delete user data from the session
-     */
+            * Delete user data from the session
+            */
     public function actionLogout()
     {
         // Start the session
@@ -158,4 +158,46 @@ class UserController
         // Redirect the user to the main page
         header("Location: /");
     }
+
+    /**
+     * Reset password 
+     */
+    public function actionReset()
+    {
+
+       $result = false;
+       $email = false;
+
+       // Form processing
+       if (isset($_POST['submit'])) {
+           $email = $_POST['email'];
+
+           // Flag of error
+           $errors = false;
+
+           // Validate errors
+           if (!User::checkEmail($email)) {
+               $errors[] = 'Wrong email';
+           }
+
+           if ($errors == false) {
+               $newPass = User::resetPassword($email);
+
+               if ($newPass == true) {
+                   // Send a mail to the user with new password
+                   $adminEmail = 'admin@gmail.com';
+                   $message = "Text: {$newPass}. From {$adminEmail}";
+                   $subject = "Subject: Reset Password";
+                   //$result = mail($email, $subject, $message);
+                   $result = true;
+               }
+           }
+
+       }
+
+       // Connect to view
+       require_once(ROOT . '/views/user/forgetpass.php');
+       return true;
+    }
+    
 }
