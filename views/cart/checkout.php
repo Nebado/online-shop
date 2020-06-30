@@ -1,5 +1,9 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<?php
+use App\components\Cart;
+?>
+
 <!-- Main -->
 <div id="mainBody">
     <div class="container">

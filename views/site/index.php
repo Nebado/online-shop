@@ -1,5 +1,11 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<?php
+use \App\models\Category;
+use \App\models\Product;
+
+?>
+
 <!-- Carousel -->
 <div id="carouselBlk">
     <div id="myCarousel" class="carousel slide">
