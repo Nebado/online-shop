@@ -1,11 +1,33 @@
 <?php
 
+namespace App\controllers;
+use App\models\Category;
+use App\components\AdminBase;
+
 /**
  * AdminCategoryController controller
  * Management of product categories in the admin panel
  */
-class AdminSubCategoryController extends AdminBase
-{    
+class AdminCategoryController extends AdminBase
+{
+    /**
+     * Action for the Category Management page
+     */
+    public function actionIndex()
+    {
+        // Access check
+        self::checkAdmin();
+        
+        // Get a list of categories
+        $categoriesList = Category::getCategoriesListAdmin();
+        
+        $subcategoriesList = Category::getSubCategoriesListAdmin();
+        
+        // Connect the view
+        require_once(ROOT . '/views/admin_category/index.php');
+        return true;
+    }
+    
     /**
      * Action for the Add Category page
      */    
@@ -19,7 +41,6 @@ class AdminSubCategoryController extends AdminBase
             // If the form is submitted
             // Get the data from the form
             $name = $_POST['name'];
-            $categoryId = $_POST['categoryId'];
             $sortOrder = $_POST['sortOrder'];
             $status = $_POST['status'];
             
@@ -34,7 +55,7 @@ class AdminSubCategoryController extends AdminBase
             if ($errors == false) {
                 // If there are no errors
                 // Add a new category
-                Category::createSubCategory($name, $categoryId, $sortOrder, $status);
+                Category::createCategory($name, $sortOrder, $status);
                 
                 // Redirect the user to the category management page
                 header("Location: /admin/category");
@@ -42,7 +63,7 @@ class AdminSubCategoryController extends AdminBase
         }
 
         // Connect the view
-        require_once(ROOT . '/views/admin_subcategory/create.php');
+        require_once(ROOT . '/views/admin_category/create.php');
         return true;
     }
     
@@ -55,7 +76,7 @@ class AdminSubCategoryController extends AdminBase
         self::checkAdmin();
         
         // Get data about a specific category
-        $subcategory = Category::getSubCategoryById($id);
+        $category = Category::getCategoryById($id);
         
         // Form processing
         if (isset($_POST['submit'])) {
@@ -63,18 +84,17 @@ class AdminSubCategoryController extends AdminBase
             // Get the data from the form
             $name = $_POST['name'];
             $sortOrder = $_POST['sortOrder'];
-            $categoryId = $_POST['categoryId'];
             $status = $_POST['status'];
             
             // Save changes
-            Category::updateSubCategoryById($id, $name, $sortOrder, $categoryId, $status);
+            Category::updateCategoryById($id, $name, $sortOrder, $status);
             
             // Redirect the user to the category management page
             header("Location: /admin/category");
         }
         
         // Connect the view
-        require_once(ROOT . '/views/admin_subcategory/update.php');
+        require_once(ROOT . '/views/admin_category/update.php');
         return true;
     }
     
@@ -90,14 +110,14 @@ class AdminSubCategoryController extends AdminBase
         if (isset($_POST['submit'])) {
             // If form is submitted
             // Delete the category
-            Category::deleteSubCategoryById($id);
+            Category::deleteCategoryById($id);
             
             // Redirect the user to the category management page
             header("Location: /admin/category");
         }
         
         // Connect the view
-        require_once(ROOT . '/views/admin_subcategory/delete.php');
+        require_once(ROOT . '/views/admin_category/delete.php');
         return true;
     }
 }

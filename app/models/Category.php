@@ -1,5 +1,9 @@
 <?php
 
+namespace App\models;
+use App\components\Db;
+use PDO;
+
 /**
  * Category class - a model for working with product categories
  */

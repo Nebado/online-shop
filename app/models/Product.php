@@ -1,5 +1,9 @@
 <?php
 
+namespace App\models;
+use App\components\Db;
+use PDO;
+
  /**
   * Product class - model for working with products
   */

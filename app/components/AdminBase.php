@@ -1,5 +1,8 @@
 <?php
 
+namespace App\components;
+use App\models\User;
+
 /**
  * The abstract AdminBase class contains common logic for controllers that
  * used in admin panel

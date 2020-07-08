@@ -1,5 +1,10 @@
 <?php
 
+namespace App\controllers;
+use App\models\Category;
+use App\models\Product;
+use App\components\Cart;
+
 /**
  * ProductController
  * Product

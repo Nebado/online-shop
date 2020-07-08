@@ -1,5 +1,12 @@
 <?php
 
+namespace App\controllers;
+use App\models\Category;
+use App\models\Product;
+use App\models\User;
+use App\components\Cart;
+use App\components\Pagination;
+
 /**
  * CatalogController controller
  * Catalog

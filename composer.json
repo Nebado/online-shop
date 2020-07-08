@@ -1,0 +1,16 @@
+{
+    "name": "root/shop",
+    "description": "Online Shop",
+    "authors": [
+        {
+            "name": "Ruslan Lazurenko",
+            "email": "ruslan.nbd@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload" : {
+        "psr-4" : {
+            "App\\" : "app/"
+        }
+    }
+}

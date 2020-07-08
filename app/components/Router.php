@@ -1,5 +1,7 @@
 <?php
 
+namespace App\components;
+
 /**
  * Class Router
  * Routing component
@@ -17,7 +19,7 @@ class Router {
      */
     public function __construct()
     {
-        $routesPath = ROOT . '/config/routes.php';
+        $routesPath = ROOT . '/app/config/routes.php';
         $this->routes = include($routesPath);
     }
     
@@ -59,13 +61,12 @@ class Router {
                 $parameters = $segments;
                 
                 // Include a controller class file
-                $controllerFile = ROOT.'/controllers/'.$controllerName.'.php';
+                $controllerFile = ROOT.'/app/controllers/'.$controllerName.'.php';
                 if (is_file($controllerFile)) {
-                    require_once($controllerFile);
+                    // Create an object, call a method (i.e. action)
+                    $controllerName = sprintf("\App\controllers\%s", $controllerName);
+                    $controllerObject = new $controllerName;
                 }
-                
-                // Create an object, call a method (i.e. action)
-                $controllerObject = new $controllerName;
                 
                 /* Call the required method ($actionName) on a specific
                  * class ($controllerObject) with the given ($parameters) parameters
@@ -80,4 +81,3 @@ class Router {
         }
     }
 }
-

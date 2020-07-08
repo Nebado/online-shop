@@ -1,9 +1,9 @@
-# Online-Shop used MVC
+# Online-Shop (MVC)
 
 ### Admin Panel
 
-** Email: **
+**Email:**
 - admin@admin.web
 
-** Password **
+**Password**
 - 123456

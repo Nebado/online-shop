@@ -1,3 +1,9 @@
+<?php
+use \App\models\Category;
+use \App\models\Product;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,7 +42,7 @@
         <div id="header">
             <div class="container">
                 <div id="welcomeLine" class="row">
-                    <div class="span6">Welcome!<strong> <?php echo User::getUserName(); ?></strong></div>
+                    <div class="span6">Welcome!<strong> <?php echo \App\models\User::getUserName(); ?></strong></div>
                     <div class="span6">
                         <div class="pull-right">
                             <a href="#"><span class="">Fr</span></a>
@@ -49,7 +55,7 @@
                                 <span class="btn btn-mini btn-primary">
                                     <i class="icon-shopping-cart icon-white"></i>
                                     [<span id="cart-count">
-                                        <?php echo Cart::countItems();?>
+                                        <?php echo \App\components\Cart::countItems();?>
                                     </span>] Items in your cart
                                 </span>
                             </a>
@@ -64,8 +70,8 @@
                         <span class="icon-bar"></span>
                     </a>
                     <div class="navbar-inner">
-                        <a class="brand" href="/"><img src="/template/themes/images/logo.png" alt="Bootsshop"/></a>
-                        <form class="form-inline navbar-search" method="post" action="products.html" >
+                        <a class="brand" href="/"><img src="/template/themes/images/logo.png" alt="Rootsshop"/></a>
+                        <form class="form-inline navbar-search" method="post" action="/" >
                             <input id="srchFld" class="srchTxt" type="text" />
                             <select class="srchTxt">
                                 <option>All</option>
@@ -80,7 +86,7 @@
                         <ul id="topMenu" class="nav pull-right">
                             <li class=""><a href="/contact">Contact</a></li>
                             <li class="">
-                                <?php if (User::isGuest()): ?>
+                                <?php if (\App\models\User::isGuest()): ?>
                                     <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
                                 <?php else: ?>
                                     <a href="/logout/" role="button" style="padding-right:0"><span class="btn btn-large btn-warning">Logout</span></a>

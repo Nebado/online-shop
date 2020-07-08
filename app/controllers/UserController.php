@@ -1,5 +1,10 @@
 <?php
 
+namespace App\controllers;
+use App\models\User;
+use App\models\Category;
+use App\components\Cart;
+
 /**
  * UserController controller
  */

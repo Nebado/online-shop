@@ -1,5 +1,8 @@
 <?php
 
+namespace App\controllers;
+use App\components\AdminBase; 
+
 /**
  * AdminController Controller
  * Home page in admin panel

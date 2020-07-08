@@ -1,5 +1,9 @@
 <?php include ROOT . '/views/layouts/header_admin.php'; ?>
 
+<?php
+use App\models\Order;
+?>
+
 <section>
     <div class="container">
         <div class="row">

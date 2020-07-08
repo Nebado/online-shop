@@ -1,5 +1,8 @@
 <?php
 
+namespace App\components;
+use PDO;
+
 /**
  * Db class
  * Component for working with a database
@@ -13,7 +16,7 @@ class Db
     public static function getConnection()
     {
         // Get the connection parameters from the file
-        $paramsPath = ROOT . '/config/db_params.php';
+        $paramsPath = ROOT . '/app/config/db_params.php';
         $params = include($paramsPath);
         
         // Establish a connection

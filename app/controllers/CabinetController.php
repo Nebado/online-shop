@@ -1,5 +1,9 @@
 <?php
 
+namespace App\controllers;
+use App\models\User;
+use App\components\Cart;
+
 /**
  * CabinetController controller
  * Management of personal information in the cabinet

@@ -1,5 +1,8 @@
 <?php
 
+namespace App\components;
+use App\models\Product;
+
 /**
  * Cart class
  * Component for working with a basket

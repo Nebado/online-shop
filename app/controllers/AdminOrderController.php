@@ -1,5 +1,11 @@
 <?php
 
+namespace App\controllers;
+use App\models\Product;
+use App\models\Order;
+use App\components\AdminBase;
+use App\components\Cart;
+
 /**
  * AdminOrderController controller
  * Management of orders in the admin panel

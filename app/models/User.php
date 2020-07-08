@@ -1,5 +1,9 @@
 <?php
 
+namespace App\models;
+use App\components\Db;
+use PDO;
+
 /**
     * Class User - a model for working with users
     */

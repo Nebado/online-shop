@@ -1,5 +1,10 @@
 <?php
 
+namespace App\controllers;
+use App\models\Category;
+use App\models\Product;
+use App\components\AdminBase;
+
 /**
  * AdminProductController Controller
  * Product management in admin panel

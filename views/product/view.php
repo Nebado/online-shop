@@ -1,5 +1,10 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
 
+<?php
+use App\models\Product;
+
+?>
+
 <!-- Main -->
 <div id="mainBody">
     <div class="container">

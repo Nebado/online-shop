@@ -1,5 +1,7 @@
 <?php
 
+namespace App\components;
+
 /*
  * Class Pagination to generate pagination
  */

@@ -1,5 +1,11 @@
 <?php
 
+namespace App\controllers;
+use App\models\Category;
+use App\models\Product;
+use App\models\User;
+use App\components\Cart;
+
 /**
  * CartController controller
  * Cart
@@ -132,7 +138,7 @@ class CartController {
             // Get user information from the database
             $userId = User::checkLogged();
             $user = User::getUserById($userId);
-            $userName = $user['name'];
+            $userName = $user['first_name'];
         } else {
             // If guest, form fields will remain empty
             $userId = false;
