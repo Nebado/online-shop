@@ -4,7 +4,9 @@
  * __Autoload function for automatically connecting classes
  */
 
-function __autoload($class_name)
+spl_autoload_register('myAutoloader');
+
+function myAutoloader($class_name)
 {
     // Array of folders where necessary classes can be found
     $array_paths = array(
