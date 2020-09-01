@@ -45,7 +45,7 @@ class CabinetController
         $firstName = $user['first_name'];
         $lastName = $user['last_name'];
         $email = $user['email'];
-        $password = $user['password'];
+        $password = md5($user['password']);
         $birth = $user['birth'];
         $company = $user['company'];
         $address = $user['address'];
@@ -61,7 +61,7 @@ class CabinetController
             $firstName  = $_POST['firstName'];
             $lastName   = $_POST['lastName'];
             $email      = $_POST['email'];
-            $password   = $_POST['password'];
+            $password   = md5($_POST['password']);
             $birth      = $_POST['birth'];
             $company    = $_POST['company'];
             $address    = $_POST['address'];

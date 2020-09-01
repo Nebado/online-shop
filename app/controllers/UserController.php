@@ -45,7 +45,7 @@ class UserController
             $firstName  = $_POST['firstName'];
             $lastName   = $_POST['lastName'];
             $email      = $_POST['email'];
-            $password   = $_POST['password'];
+            $password   = md5($_POST['password']);
             $birth      = $_POST['birth'];
             $company    = $_POST['company'];
             $address    = $_POST['address'];
@@ -116,7 +116,7 @@ class UserController
             // If there are no errors
             // Get the form data from the form
             $email = $_POST['email'];
-            $password = $_POST['password'];
+            $password = md5($_POST['password']);
             
             // Flag of errors
             $errors = false;
